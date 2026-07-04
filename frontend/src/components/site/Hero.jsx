@@ -22,11 +22,11 @@ export const Hero = () => {
                 animate={{ scale: 1 }}
                 transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-walnut/85 via-walnut/25 to-walnut/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-walnut/90 via-walnut/45 to-walnut/50" />
 
-            <div className="relative z-10 mx-auto w-full max-w-[1500px] px-6 pb-16 md:px-12 md:pb-24">
+            <div className="relative z-10 mx-auto w-full max-w-[1500px] px-6 pb-16 md:px-12 md:pb-24 [text-shadow:0_2px_24px_rgba(0,0,0,0.45)]">
                 <motion.p
-                    className="overline mb-5 text-sand/80"
+                    className="mb-5 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-sand"
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.8 }}
