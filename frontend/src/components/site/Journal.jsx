@@ -18,9 +18,11 @@ export const Journal = () => {
         if (open === null) return;
         const onKey = (e) => e.key === "Escape" && setOpen(null);
         window.addEventListener("keydown", onKey);
+        window.__lenis?.stop();
         document.body.style.overflow = "hidden";
         return () => {
             window.removeEventListener("keydown", onKey);
+            window.__lenis?.start();
             document.body.style.overflow = "";
         };
     }, [open]);
@@ -96,7 +98,8 @@ export const Journal = () => {
                 {post && (
                     <motion.div
                         data-testid="journal-modal"
-                        className="fixed inset-0 z-[80] flex justify-center overflow-y-auto bg-walnut/60 p-4 backdrop-blur-sm md:p-10"
+                        data-lenis-prevent
+                        className="fixed inset-0 z-[80] flex items-start justify-center overflow-y-auto overscroll-contain bg-walnut/60 p-4 backdrop-blur-sm md:p-10"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}

@@ -1,0 +1,22 @@
+{
+  "summary": "Iteration 8 verifies the Journal modal scroll fix. The modal (position:fixed inset-0, overflow-y-auto, data-lenis-prevent) now scrolls properly for all three journal entries; the bottom sign-off '— Bill Farr' is fully reachable via mouse wheel and programmatic scrollTop. The top of the article (image + title) is not clipped on open. All three close methods (X button, Escape key, backdrop click) work, and window.__lenis smooth-scrolling on the main page resumes correctly after close. Regression checks pass: Western gallery lightbox opens/closes, Contact form submits and persists to /api/inquiries (count 9 → 10), no console errors, no 'Made with Emergent' badge in DOM.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Duplicate data-testid='contact-email' in Contact.jsx — assigned to both the mailto <a> link (line 77) and (via contact-email-input) to the input field. The mailto link takes the plain 'contact-email' testid, which caused Playwright to try filling the anchor. Recommend renaming the mailto link testid to 'contact-email-link' for clarity.",
+    "Journal.jsx line 109 still uses className 'relative my-auto ...' on the article; the task description mentioned removing my-auto. In practice items-start on the parent and overflow-y-auto make scrolling work (verified), so my-auto is currently harmless, but it is misleading vs. the stated fix intent. Consider removing my-auto to match the described change and avoid future confusion."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "100%", "frontend": "100%" },
+  "seed_data_creation": "Created 1 test inquiry (TEST_ScrollFix / test-scroll@example.com) via POST /api/inquiries during regression check.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Journal modal scroll behavior is now verified working. Observed data: modal.scrollHeight ~1220-1240px vs clientHeight 1080px @1920x1080 viewport → scroll required and functional. Wheel events over modal moved scrollTop from 0 → 130-160 after 15 x 400 delta ticks. Sign-off paragraph enters viewport when modal.scrollTop = scrollHeight. Note the duplicate 'contact-email' testid pitfall — use 'contact-email-input' for the email <input> in future tests.",
+  "rca of the issue": "Prior iteration bug: Lenis smooth-scroll intercepted wheel events globally and body was locked, so the modal overlay's overflow-y-auto scroll container never received wheel deltas → user could not scroll to reveal the bottom of longer articles. Mitigation (already applied in this iteration): (1) call window.__lenis.stop() on modal open, start() on close inside a useEffect keyed on `open`; (2) add data-lenis-prevent + overscroll-contain to the fixed modal overlay so Lenis explicitly ignores it; (3) use items-start on the flex container so the article anchors to the top instead of centering (which would clip the top when content is taller than the viewport). Verified all three effects are in place and behave correctly at 1920x1080."
+}
