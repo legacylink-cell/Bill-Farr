@@ -1,12 +1,7 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { travel } from "../../data/content";
-import { Lightbox } from "./Lightbox";
 
 export const TravelGallery = () => {
-    const [idx, setIdx] = useState(null);
-    const nav = (d) => setIdx((i) => (i + d + travel.length) % travel.length);
-
     return (
         <section
             id="travel"
@@ -29,10 +24,9 @@ export const TravelGallery = () => {
 
                 <div className="space-y-16 md:space-y-28">
                     {travel.map((img, i) => (
-                        <motion.button
+                        <motion.figure
                             key={i}
                             data-testid={`travel-item-${i}`}
-                            onClick={() => setIdx(i)}
                             className={`group block w-full ${
                                 i % 2 === 0 ? "md:pr-[18%]" : "md:ml-auto md:pl-[18%]"
                             }`}
@@ -50,7 +44,7 @@ export const TravelGallery = () => {
                                     className="aspect-[16/10] w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
                                 />
                             </div>
-                            <div className="mt-4 flex items-baseline justify-between gap-6">
+                            <figcaption className="mt-4 flex items-baseline justify-between gap-6">
                                 <span className="font-serif text-3xl text-sand md:text-4xl">
                                     <span className="text-clay">{String(i + 1).padStart(2, "0")}</span>{" "}
                                     {img.title}
@@ -58,13 +52,11 @@ export const TravelGallery = () => {
                                 <span className="whitespace-nowrap font-mono text-[0.65rem] uppercase tracking-[0.2em] text-sand/50">
                                     {img.location}
                                 </span>
-                            </div>
-                        </motion.button>
+                            </figcaption>
+                        </motion.figure>
                     ))}
                 </div>
             </div>
-
-            <Lightbox images={travel} index={idx} onClose={() => setIdx(null)} onNav={nav} />
         </section>
     );
 };

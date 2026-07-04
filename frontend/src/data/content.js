@@ -5,41 +5,37 @@ export const PORTRAIT =
 export const HERO_HORSES =
     "https://customer-assets.emergentagent.com/job_wanderlust-gallery-8/artifacts/lq4oab8k_image.png";
 
+// Western grid uses fixed-height grid rows + object-cover, so no empty frames.
 export const western = [
     {
         src: HERO_HORSES,
         title: "The Run",
         location: "High Plains, Wyoming",
-        span: "md:col-span-8 md:row-span-2",
-        ratio: "aspect-[16/9]",
+        cls: "md:col-span-8 md:row-span-2",
     },
     {
         src: "https://images.unsplash.com/photo-1723750601235-d53a04a6e3a1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwzfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
         title: "Rider at Dusk",
         location: "Monument Valley",
-        span: "md:col-span-4",
-        ratio: "aspect-[3/4]",
+        cls: "md:col-span-4 md:row-span-2",
     },
     {
         src: "https://images.unsplash.com/photo-1624125278758-c0572f6ebc55?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwxfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
         title: "White Horse",
         location: "San Rafael Swell",
-        span: "md:col-span-4",
-        ratio: "aspect-[3/4]",
+        cls: "md:col-span-5 md:row-span-2",
     },
     {
         src: "https://images.unsplash.com/photo-1624125276915-39e2afd37438?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHw0fHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
         title: "Two Riders",
         location: "Front Range, Colorado",
-        span: "md:col-span-5",
-        ratio: "aspect-[4/3]",
+        cls: "md:col-span-7 md:row-span-2",
     },
     {
         src: "https://images.unsplash.com/photo-1624125279186-5fb175476e80?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwyfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
         title: "Red Coat",
         location: "Big Sky, Montana",
-        span: "md:col-span-7",
-        ratio: "aspect-[4/3]",
+        cls: "md:col-span-12 md:row-span-2",
     },
 ];
 
