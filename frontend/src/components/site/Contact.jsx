@@ -49,7 +49,7 @@ export const Contact = ({ prefill }) => {
         <section
             id="contact"
             data-testid="contact"
-            className="grain bg-walnut py-24 text-sand md:py-36"
+            className="bg-walnut py-24 text-sand md:py-36"
         >
             <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-14 px-6 md:grid-cols-12 md:px-12">
                 <motion.div

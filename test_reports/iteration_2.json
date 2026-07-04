@@ -1,0 +1,27 @@
+{
+  "summary": "Frontend-only verification of the shaky/blurry page bug fix (film-grain overlay). Confirmed: exactly ONE '.grain' element in DOM (App root), '.grain::before' has animation-name='none' (no keyframe animation running), position:fixed with inset:0, opacity:0.03, z-index:60. Zero running 'grain' animations found via document.getAnimations(). Hero renders crisply with headline 'Where the light still runs wild.' and horses image loaded. Regressions all green: navbar links present (nav-western/travel/prints/journal/about/contact) and smooth-scroll works; Western lightbox opens (western-item-0), next/prev/close all functional; Prints 'Inquire to purchase' (print-inquire-0) scrolls to contact, prefills subject 'Print inquiry — Rider at Dusk' and activates inquiry_type=print (bg-clay). Contact form submit succeeds with success toast 'Thank you — your message is on its way to Bill.', form clears, and inquiry is persisted via GET /api/inquiries (verified by unique TEST email). No 'Made with Emergent' badge or text anywhere in DOM.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/test_reports/iteration_2.json",
+    "/app/backend/tests/test_inquiries.py"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Bug fix is clean and correct: .grain::before is now a single static fixed overlay applied once at the App root; the animated `.grain` classes on TravelGallery.jsx and Contact.jsx have been removed. This eliminates the compounding transform-animated overlays that were causing the whole-page shake.",
+    "Minor: hero h1 has no data-testid ('hero-headline') — cosmetic for tests only; not required by this bug fix. Text-based selection works.",
+    "Optional hardening: the SVG grain background image is inlined and 300x300; opacity 0.03 already makes it near-invisible. Consider removing it entirely if not visually needed to save ~1KB and one paint layer."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "not retested (per request)", "frontend": "100% of tested flows"},
+  "test_credentials": "N/A - no auth",
+  "seed_data_creation": "One TEST_ prefixed inquiry (email TEST_grain_<uuid>@example.com) created via contact form during persistence verification.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Grain overlay bug is FIXED. Verify via: document.querySelectorAll('.grain').length === 1 and getComputedStyle(el,'::before').animationName === 'none'. Reusable pytest at /app/backend/tests/test_inquiries.py (~2s, 8 tests). Frontend uses Lenis smooth scroll (window.__lenis).",
+  "rca of the issue": "Root cause: an animated CSS film-grain overlay (.grain::before) using a huge fixed pseudo-element (inset:-200%) with a transform-based @keyframes 'grain' animation running every 0.6s was applied THREE times (App root + TravelGallery + Contact section). The stacked transform-animated overlays repainted large portions of the viewport 60fps, causing the whole-page 'shaky/vibrating' perception and softness. Fix in /app/frontend/src/index.css replaces .grain::before with a single static fixed layer (inset:0, no animation, opacity 0.03); the 'grain' className was removed from TravelGallery.jsx and Contact.jsx so it only lives once on the App root. Verified: 1 .grain element, animation-name='none', 0 running 'grain' animations."
+}

@@ -11,7 +11,7 @@ export const TravelGallery = () => {
         <section
             id="travel"
             data-testid="travel"
-            className="grain bg-walnut py-20 text-sand md:py-32"
+            className="bg-walnut py-20 text-sand md:py-32"
         >
             <div className="mx-auto max-w-[1500px] px-6 md:px-12">
                 <div className="mb-14 flex flex-col justify-between gap-4 border-t border-[var(--border-dark)] pt-8 md:flex-row md:items-end">
