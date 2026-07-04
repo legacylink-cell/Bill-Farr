@@ -1,0 +1,36 @@
+{
+  "summary": "Iteration 6 frontend-only verification: cleaned local /the-run.png (baked-in slideshow '>' arrow cropped out) is served everywhere the featured horse photo is used. All checks passed. No regressions observed in hero, Western gallery/lightbox, Prints, navbar, or Contact form (persists via /api/inquiries).",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "verifications": {
+    "the_run_png_http_200": "GET https://wanderlust-gallery-8.preview.emergentagent.com/the-run.png -> HTTP 200 (~1.19 MB)",
+    "hero_img_src": "/the-run.png (relative, resolves against origin) - old customer-assets lq4oab8k URL not present anywhere",
+    "hero_headline": "'Where the light still runs wild.' rendered correctly",
+    "western_item_0_src": "/the-run.png",
+    "lightbox_img_src": "/the-run.png; next/prev/close buttons all present and functional",
+    "prints_the_run_src": "/the-run.png (2nd tile, title 'The Run')",
+    "nav_links_present": "nav-western, nav-travel, nav-prints, nav-journal, nav-about, nav-contact all present",
+    "contact_form_submit": "POST /api/inquiries persisted new inquiry (id 9cb36020-...; count 7 -> 8); success toast: 'Thank you — your message is on its way to Bill.'",
+    "emergent_badge": "Not present in DOM",
+    "footer_credit_link": "Present, href = https://mozeid.com/",
+    "console_errors": "None captured during page load or interactions",
+    "baked_in_arrow_visual": "Screenshots of hero and Western 'The Run' tile confirm NO circular '>' navigation arrow or vertical slideshow seam on the right side of the horse photo — image is cleanly cropped"
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Minor: duplicate data-testid='contact-email' is used on the mailto <a> link in Contact.jsx (line 77) while the actual email input uses data-testid='contact-email-input' (line 120). This is functional but violates unique-testid convention and can confuse automated tests that select by contact-email. Consider renaming the mailto link testid (e.g., 'contact-email-link')."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "N/A (frontend-only per request)", "frontend": "100%" },
+  "test_credentials": "N/A (no auth)",
+  "seed_data_creation": "One TEST_ inquiry created via contact form: name='TEST User iter6', email='test_iter6@example.com'",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "The featured horse photo is now hosted locally at /app/frontend/public/the-run.png and referenced as '/the-run.png' from content.js (HERO_HORSES), which is consumed by Hero, WesternGallery item 0, and Prints 'The Run'. Public URL returns 200. The image no longer contains the baked-in circular '>' arrow. Duplicate data-testid 'contact-email' exists on both the mailto link and (with -input suffix) on the actual email <input>, so use 'contact-email-input' when filling the form.",
+  "rca of the issue": "Original bug: featured hero photo was a slideshow screenshot with a baked-in circular '>' navigation arrow (and faint vertical seam) on the right ~7.5% of the image. Fix applied by main agent: cropped that right portion, saved cleaned copy to /app/frontend/public/the-run.png, and updated HERO_HORSES to '/the-run.png'. Verified visually via hero, Western tile, and Lightbox screenshots — arrow/seam are gone."
+}

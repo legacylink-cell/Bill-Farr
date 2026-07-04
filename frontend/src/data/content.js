@@ -2,8 +2,7 @@
 // User-provided originals:
 export const PORTRAIT =
     "https://customer-assets.emergentagent.com/job_wanderlust-gallery-8/artifacts/2utfde32_image.png";
-export const HERO_HORSES =
-    "https://customer-assets.emergentagent.com/job_wanderlust-gallery-8/artifacts/lq4oab8k_image.png";
+export const HERO_HORSES = "/the-run.png";
 
 // Western grid uses fixed-height grid rows + object-cover, so no empty frames.
 export const western = [
