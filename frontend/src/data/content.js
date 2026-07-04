@@ -40,9 +40,9 @@ export const western = [
 
 export const travel = [
     {
-        src: "https://images.pexels.com/photos/15766210/pexels-photo-15766210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400",
-        title: "Analog Peaks",
-        location: "Dolomites, Italy",
+        src: "/travel-foggy-road.png",
+        title: "The Quiet Mile",
+        location: "Greenwich Park, London",
     },
     {
         src: "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHx0cmF2ZWwlMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBjaW5lbWF0aWMlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
@@ -50,9 +50,9 @@ export const travel = [
         location: "Atlas Mountains, Morocco",
     },
     {
-        src: "https://images.pexels.com/photos/31385957/pexels-photo-31385957.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400",
-        title: "Cloud Forest",
-        location: "Patagonia, Chile",
+        src: "/travel-stpauls.png",
+        title: "St Paul's After Dark",
+        location: "Millennium Bridge, London",
     },
     {
         src: "https://images.unsplash.com/photo-1472791108553-c9405341e398?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHx0cmF2ZWwlMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBjaW5lbWF0aWMlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
