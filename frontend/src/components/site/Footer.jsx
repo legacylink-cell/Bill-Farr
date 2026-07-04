@@ -16,6 +16,18 @@ export const Footer = () => {
                         © {new Date().getFullYear()} Bill Farr — All rights reserved
                     </p>
                 </div>
+
+                <div className="mt-8 flex justify-center border-t border-[var(--border-dark)] pt-6">
+                    <a
+                        href="https://mozeid.com/"
+                        target="_blank"
+                        rel="noreferrer"
+                        data-testid="footer-credit"
+                        className="link-underline font-mono text-[0.6rem] uppercase tracking-[0.25em] text-sand/50 transition-colors hover:text-clay"
+                    >
+                        Designed by Mo Studio
+                    </a>
+                </div>
             </div>
         </footer>
     );
