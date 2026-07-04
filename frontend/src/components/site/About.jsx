@@ -20,6 +20,8 @@ export const About = () => {
                     <img
                         src={PORTRAIT}
                         alt="Portrait of Bill Farr"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full object-cover grayscale-[0.15]"
                     />
                     <span className="absolute -bottom-4 -right-4 hidden border border-clay px-4 py-2 font-mono text-[0.6rem] uppercase tracking-[0.25em] text-clay md:block bg-sand">

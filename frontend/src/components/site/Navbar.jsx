@@ -33,7 +33,7 @@ export const Navbar = () => {
             data-testid="navbar"
             className={`fixed inset-x-0 top-0 z-[70] transition-all duration-500 ${
                 scrolled
-                    ? "border-b border-[var(--border-light)] bg-sand/80 backdrop-blur-xl"
+                    ? "border-b border-[var(--border-light)] bg-sand/85 backdrop-blur-md"
                     : "border-b border-transparent"
             }`}
         >
@@ -88,7 +88,7 @@ export const Navbar = () => {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden border-t border-[var(--border-light)] bg-sand/95 backdrop-blur-xl md:hidden"
+                        className="overflow-hidden border-t border-[var(--border-light)] bg-sand/95 md:hidden"
                     >
                         <div className="flex flex-col px-6 py-4">
                             {[...links, { label: "Book a shoot", id: "contact" }].map((l) => (

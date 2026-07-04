@@ -107,3 +107,20 @@ export const journal = [
         title: "Why I still shoot film in the backcountry",
     },
 ];
+
+// Lightweight image optimization: request smaller, faster-loading files.
+const optimize = (url) => {
+    if (url.includes("images.unsplash.com")) {
+        return url.includes("&w=") ? url : `${url}&w=1200`;
+    }
+    if (url.includes("images.pexels.com")) {
+        return url.replace("dpr=2", "dpr=1");
+    }
+    return url;
+};
+
+[western, travel, prints, journal].forEach((arr) =>
+    arr.forEach((item) => {
+        item.src = optimize(item.src);
+    })
+);

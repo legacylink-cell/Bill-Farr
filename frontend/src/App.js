@@ -16,7 +16,7 @@ function App() {
     const [prefill, setPrefill] = useState(null);
 
     useEffect(() => {
-        const lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.9 });
+        const lenis = new Lenis({ lerp: 0.14, wheelMultiplier: 1, smoothWheel: true });
         window.__lenis = lenis;
         let raf;
         const loop = (t) => {

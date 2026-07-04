@@ -65,6 +65,8 @@ export const Journal = () => {
                         key={hover}
                         src={journal[hover].src}
                         alt=""
+                        loading="lazy"
+                        decoding="async"
                         className="pointer-events-none absolute z-30 hidden h-64 w-48 object-cover shadow-2xl md:block"
                         style={{ left: pos.x + 24, top: pos.y - 130 }}
                         initial={{ opacity: 0, scale: 0.9 }}

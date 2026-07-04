@@ -36,6 +36,8 @@ export const Prints = ({ onInquire }) => {
                             <img
                                 src={p.src}
                                 alt={p.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                             />
                         </div>

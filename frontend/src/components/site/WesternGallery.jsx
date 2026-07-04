@@ -43,6 +43,8 @@ export const WesternGallery = () => {
                             <img
                                 src={img.src}
                                 alt={img.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="h-full w-full object-cover brightness-[0.96] transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-105"
                             />
                         </div>
