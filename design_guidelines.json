@@ -1,0 +1,140 @@
+{
+  "theme": "Light",
+  "archetype": "Organic & Earthy",
+  "emotional_tone": "Warm, grounded, nostalgic, cinematic, human.",
+  "colors": {
+    "background_primary": "#F5F2EB", 
+    "background_secondary": "#EAE5D9",
+    "background_dark": "#2A2421",
+    "text_primary": "#2A2421",
+    "text_secondary": "#5C534D",
+    "text_on_dark": "#F5F2EB",
+    "accent_primary": "#B25E42",
+    "accent_secondary": "#7A8B76",
+    "border_light": "rgba(42, 36, 33, 0.12)",
+    "border_dark": "rgba(245, 242, 235, 0.15)"
+  },
+  "typography": {
+    "font_families": {
+      "heading": "Cormorant Garamond",
+      "body": "Outfit",
+      "accent_mono": "JetBrains Mono"
+    },
+    "scale": {
+      "h1": "text-5xl md:text-6xl+ tracking-tighter font-light",
+      "h2": "text-4xl md:text-5xl tracking-tight font-light",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body": "text-base md:text-lg leading-relaxed font-light",
+      "overline": "text-xs uppercase tracking-[0.2em] font-medium text-accent_primary"
+    },
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap"
+  },
+  "layout_and_spacing": {
+    "container_padding": "px-6 md:px-12 lg:px-24 py-12 md:py-24",
+    "grid_system": "Asymmetrical 'Tetris' grid for galleries. Mix of col-span-full, col-span-4, col-span-8. Avoid perfect symmetry.",
+    "corners": "rounded-none", 
+    "shadows": "None. Rely on 1px borders and negative space."
+  },
+  "motion_and_interaction": {
+    "scroll": "Mandatory use of Lenis for smooth momentum scrolling.",
+    "hover_states": "Images: subtle scale-up (1.02) with image brightness increase. Links: under-line expansion or color shift to accent_primary.",
+    "page_load": "Framer Motion staggered fade-ups (y: 20, opacity: 0 to 1).",
+    "lightbox": "Framer Motion AnimatePresence for smooth full-screen image expansion."
+  },
+  "components_strategy": {
+    "forms": "Use Shadcn Form, Input, Textarea. Override default borders to be 'border-b only' (flair-less, editorial style). Use background-transparent.",
+    "buttons": "Flat, rectangular. text-primary border border-text_primary hover:bg-text_primary hover:text-background_primary transition-colors. No rounded corners.",
+    "cards": "DO NOT USE default cards. Use bare divs. Image on top, typography below. No borders, no shadows.",
+    "navigation": "Sticky, Glassmorphism with backdrop-blur-xl, bg-[#F5F2EB]/80, 1px bottom border-light. Logo centered or left.",
+    "lightbox_modal": "Use Shadcn Dialog, customized to have a #2A2421 background with 95% opacity, removing close button background for minimalism."
+  },
+  "sections_blueprint": [
+    {
+      "name": "Hero",
+      "layout": "90vh full-bleed image/video. bg-black/30 overlay (or gradient to transparent) so text is readable. Content pinned to bottom-left or center.",
+      "content": "H1: 'Bill Farr'. Subtitle: 'Western & Travel Photographer'. Subtle 'Scroll down' indicator."
+    },
+    {
+      "name": "About / Story",
+      "layout": "2-column grid. Left: large portrait image. Right: editorial text, large drop-cap or massive quote.",
+      "content": "Brief bio, establishing the human connection and emotional strength."
+    },
+    {
+      "name": "Portfolio - Western",
+      "layout": "Asymmetric Bento/Tetris grid (md:grid-cols-12). Images spanning 4, 8, or 6 columns. Generous gap-8.",
+      "features": "Clicking image opens Lightbox."
+    },
+    {
+      "name": "Portfolio - Travel",
+      "layout": "Horizontal scroll section or alternating left/right prominent images to contrast the Western gallery layout.",
+      "features": "Clicking image opens Lightbox."
+    },
+    {
+      "name": "Prints for Sale",
+      "layout": "Strict 3-column grid (md:grid-cols-3) for commerce clarity.",
+      "content": "Image, Title (Serif), Price (Sans-serif), 'Inquire/Buy' flat button."
+    },
+    {
+      "name": "Journal / Blog",
+      "layout": "List view. Huge typography titles. Hovering title reveals a small following image (via Framer motion) or simple elegant image next to text.",
+      "content": "Recent travels and behind-the-lens stories."
+    },
+    {
+      "name": "Contact / Booking",
+      "layout": "Dark background section (#2A2421). 2 columns: Left side text/email/socials. Right side booking form.",
+      "features": "Minimalist inputs with bottom borders only."
+    }
+  ],
+  "media": {
+    "western_gallery": [
+      {
+        "url": "https://images.unsplash.com/photo-1723750601235-d53a04a6e3a1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwzfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "A person riding a horse in the middle of a field"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1624125276915-39e2afd37438?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHw0fHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "2 person riding horse on green grass field during daytime"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1624125279186-5fb175476e80?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwyfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "man in red jacket standing beside white horse during daytime"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1624125278758-c0572f6ebc55?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwxfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "man riding on white horse during daytime"
+      }
+    ],
+    "travel_gallery": [
+      {
+        "url": "https://images.pexels.com/photos/15766210/pexels-photo-15766210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "A serene mountain landscape captured with a retro, analog film aesthetic."
+      },
+      {
+        "url": "https://images.pexels.com/photos/31385957/pexels-photo-31385957.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Serene mountain landscape with misty clouds and dense evergreen forest."
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHx0cmF2ZWwlMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBjaW5lbWF0aWMlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "aerial photo of brown moutains"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1472791108553-c9405341e398?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHx0cmF2ZWwlMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBjaW5lbWF0aWMlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
+        "description": "snow-capped mountain under sky"
+      }
+    ],
+    "about_and_hero": [
+      {
+        "url": "https://images.unsplash.com/photo-1562583489-bf23ec64651d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzJ8MHwxfHNlYXJjaHwyfHxwaG90b2dyYXBoZXIlMjB2aW50YWdlJTIwY2FtZXJhJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzgzMTIzMzQ1fDA&ixlib=rb-4.1.0&q=85",
+        "description": "portrait for about section"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1603574670812-d24560880210?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzJ8MHwxfHNlYXJjaHwxfHxwaG90b2dyYXBoZXIlMjB2aW50YWdlJTIwY2FtZXJhJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzgzMTIzMzQ1fDA&ixlib=rb-4.1.0&q=85",
+        "description": "alternate portrait for about section or hero"
+      }
+    ]
+  },
+  "testing": {
+    "requirements": "All interactive and key informational elements MUST include a data-testid attribute in kebab-case."
+  },
+  "instructions_to_main_agent": "Ensure you build the site using HTML/Tailwind for the layouts, applying the exact colors, fonts, and generous spacing specified. Implement Lenis for scrolling. Use the provided high-quality Unsplash/Pexels URLs exclusively for all imagery (no placeholders). Forms and Dialogs should be implemented using customized Shadcn components matching the flat, border-only minimalist aesthetic."
+}
