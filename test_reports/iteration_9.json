@@ -1,0 +1,22 @@
+{
+  "summary": "Iteration 9 regression testing after removing 'emergent' references (local /portrait.png swap + removal of unused emergentintegrations from backend/requirements.txt). All backend tests pass (8/8) and all frontend regression checks pass. About portrait now serves from local /portrait.png (HTTP 200, naturalWidth=503). Backend health & inquiries CRUD verified unaffected by requirements change. Contact form E2E success toast confirmed. Western Lightbox open/close, Journal modal open/close verified. Travel local images load correctly. No console errors and no visible 'Made with Emergent' badge in DOM.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_inquiries.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "backend/tests/test_inquiries.py contains a hardcoded fallback URL in os.environ.get('REACT_APP_BACKEND_URL', 'https://...'). Per env-var policy, remove the default so missing config fails fast. Non-blocking for this iteration since env is set.",
+    "content.js optimize() side-effect mutation on module load is fine but is a global one-time mutation; consider computing srcs at import site for testability. Non-critical."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100%", "frontend": "100%"},
+  "test_credentials": "None required (no auth in app).",
+  "seed_data_creation": "Created TEST_-prefixed inquiries via pytest and one via UI (TEST_ui_<ts>) — persisted in DB; no cleanup performed (matches prior iterations).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Correct testids: lightbox uses [data-testid=lightbox] / lightbox-close (NOT western-lightbox). Journal uses [data-testid=journal-modal] / journal-modal-close. Hero text is split by <br> so search for both 'Where the light' and 'still runs wild' substrings, or check [data-testid=hero]. Travel local images: /travel-foggy-road.png, /travel-stpauls.png. Portrait: /portrait.png. Contact success toast text: 'Thank you — your message is on its way to Bill.'",
+  "rca of the issue": "N/A — no issues found."
+}
