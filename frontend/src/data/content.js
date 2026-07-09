@@ -1,81 +1,81 @@
 // Central content + imagery for the Bill Farr photography site.
-// User-provided originals:
+// All imagery is Bill Farr's own work, optimized and served from /public.
 export const PORTRAIT = "/portrait.png";
-export const HERO_HORSES = "/the-run.png";
+export const HERO_HORSES = "/hero-sunburst.jpg";
 
 // Western grid uses fixed-height grid rows + object-cover, so no empty frames.
 export const western = [
     {
-        src: HERO_HORSES,
-        title: "The Run",
-        location: "High Plains, Wyoming",
+        src: "/west-horsedrive.jpg",
+        title: "The Drive",
+        location: "Westcliffe, Colorado",
         cls: "md:col-span-8 md:row-span-2",
     },
     {
-        src: "https://images.unsplash.com/photo-1723750601235-d53a04a6e3a1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwzfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
-        title: "Rider at Dusk",
-        location: "Monument Valley",
+        src: "/west-wrangler.jpg",
+        title: "Before the Ride",
+        location: "Westcliffe, Colorado",
         cls: "md:col-span-4 md:row-span-2",
     },
     {
-        src: "https://images.unsplash.com/photo-1624125278758-c0572f6ebc55?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwxfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
-        title: "White Horse",
-        location: "San Rafael Swell",
+        src: "/west-roping.jpg",
+        title: "The Catch",
+        location: "Moab, Utah",
         cls: "md:col-span-5 md:row-span-2",
     },
     {
-        src: "https://images.unsplash.com/photo-1624125276915-39e2afd37438?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHw0fHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
-        title: "Two Riders",
-        location: "Front Range, Colorado",
+        src: "/west-longhorn.jpg",
+        title: "Longhorn",
+        location: "Texas Hill Country",
         cls: "md:col-span-7 md:row-span-2",
     },
     {
-        src: "https://images.unsplash.com/photo-1624125279186-5fb175476e80?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwyfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
-        title: "Red Coat",
-        location: "Big Sky, Montana",
+        src: "/west-herd.jpg",
+        title: "The Remuda",
+        location: "Westcliffe, Colorado",
         cls: "md:col-span-12 md:row-span-2",
     },
 ];
 
 export const travel = [
     {
-        src: "/travel-foggy-road.png",
-        title: "The Quiet Mile",
+        src: "/travel-fog-bike.jpg",
+        title: "Morning Fog",
         location: "Greenwich Park, London",
     },
     {
-        src: "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHx0cmF2ZWwlMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBjaW5lbWF0aWMlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
-        title: "Golden Ridge",
-        location: "Atlas Mountains, Morocco",
+        src: "/travel-caddo.jpg",
+        title: "Cypress Water",
+        location: "Caddo Lake, Texas",
     },
     {
-        src: "/travel-stpauls.png",
+        src: "/travel-bigben.jpg",
+        title: "Westminster After Dark",
+        location: "London, England",
+    },
+    {
+        src: "/travel-stpauls.jpg",
         title: "St Paul's After Dark",
         location: "Millennium Bridge, London",
-    },
-    {
-        src: "https://images.unsplash.com/photo-1472791108553-c9405341e398?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHx0cmF2ZWwlMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBjaW5lbWF0aWMlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
-        title: "First Light",
-        location: "Sierra Nevada, USA",
     },
 ];
 
 export const prints = [
     {
-        src: "https://images.unsplash.com/photo-1723750601235-d53a04a6e3a1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwzfHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
-        title: "Rider at Dusk",
+        src: "/west-roping.jpg",
+        title: "The Catch",
         edition: "Edition of 25 · Archival Pigment",
-        price: "$420",
+        price: "$480",
     },
     {
-        src: HERO_HORSES,
-        title: "The Run",
+        src: "/hero-sunburst.jpg",
+        title: "First Light, Moab",
         edition: "Edition of 15 · Museum Fine Art",
         price: "$680",
     },
     {
-        src: "https://images.pexels.com/photos/15766210/pexels-photo-15766210.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400",
-        title: "Analog Peaks",
+        src: "/travel-caddo.jpg",
+        title: "Cypress Water",
         edition: "Edition of 30 · Archival Pigment",
         price: "$390",
     },
@@ -83,7 +83,7 @@ export const prints = [
 
 export const journal = [
     {
-        src: "https://images.unsplash.com/photo-1472791108553-c9405341e398?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwyfHx0cmF2ZWwlMjBsYW5kc2NhcGUlMjBtb3VudGFpbnMlMjBjaW5lbWF0aWMlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
+        src: "/west-horsedrive.jpg",
         date: "May 2026",
         readtime: "6 min read",
         title: "Chasing the last light over the divide",
@@ -96,7 +96,7 @@ export const journal = [
         ],
     },
     {
-        src: "https://images.unsplash.com/photo-1624125276915-39e2afd37438?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHw0fHx3ZXN0ZXJuJTIwY293Ym95JTIwaG9yc2UlMjBkZXNlcnQlMjBwaG90b2dyYXBoeXxlbnwwfHx8fDE3ODMxMjMzNDV8MA&ixlib=rb-4.1.0&q=85",
+        src: "/west-roping.jpg",
         date: "Mar 2026",
         readtime: "4 min read",
         title: "Notes from a week on the working ranch",
@@ -109,7 +109,7 @@ export const journal = [
         ],
     },
     {
-        src: "https://images.pexels.com/photos/31385957/pexels-photo-31385957.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=1400",
+        src: "/travel-fog-bike.jpg",
         date: "Jan 2026",
         readtime: "8 min read",
         title: "Why I still shoot film in the backcountry",
@@ -122,20 +122,3 @@ export const journal = [
         ],
     },
 ];
-
-// Lightweight image optimization: request smaller, faster-loading files.
-const optimize = (url) => {
-    if (url.includes("images.unsplash.com")) {
-        return url.includes("&w=") ? url : `${url}&w=1200`;
-    }
-    if (url.includes("images.pexels.com")) {
-        return url.replace("dpr=2", "dpr=1");
-    }
-    return url;
-};
-
-[western, travel, prints, journal].forEach((arr) =>
-    arr.forEach((item) => {
-        item.src = optimize(item.src);
-    })
-);

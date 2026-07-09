@@ -44,17 +44,36 @@ export const About = () => {
                 </h2>
                 <div className="mt-8 space-y-5 text-base leading-relaxed text-ink md:text-lg">
                     <p>
-                        I'm Bill Farr — a Western and travel photographer chasing the
-                        kind of light that only shows up when you've waited long enough
-                        for it. My work lives out on the range and along the road: wild
-                        horses, working hands, and the wide, unhurried country in
-                        between.
+                        I'm a Western and travel photographer drawn to the edges of
+                        things — wide horizons, quiet roads, and the stories that live
+                        in the space between light and shadow. The American West taught
+                        me to slow down and pay attention. Dust rising from a horse's
+                        hooves, the creak of a saddle, the way a rancher's face carries
+                        both weather and wisdom — these are the details I try to honor.
+                        But my curiosity doesn't stop at the state line. I carry that
+                        same instinct with me across oceans and borders.
                     </p>
                     <p>
-                        Every frame is an attempt to hold onto a feeling — the hush
-                        before a storm, the warmth of last light, the quiet dignity of
-                        a place that doesn't need you to notice it. I hope you feel some
-                        of that here.
+                        Taking advantage of my past life in London, I was drawn to the
+                        quiet drama of the Lake District, where mist drapes itself over
+                        the fells like a worn wool blanket. I've watched fog roll through
+                        Scottish glens, revealing a lone tree or a stone cottage with a
+                        kind of reverence that feels almost sacred. Europe offers its own
+                        rhythm — cobblestone streets glowing after rain, alpine valleys
+                        wrapped in cloud, coastal cliffs where the wind carries stories
+                        older than any photograph I could make. These places remind me
+                        that clarity often arrives in fragments: a break in the fog, a
+                        shaft of light, a moment of stillness in a crowded square.
+                    </p>
+                    <p>
+                        My photographs are my way of gathering those fragments. I want
+                        them to feel like memories you can step into — warm, weathered,
+                        shaped by land and culture. Whether I'm riding alongside cowboys
+                        at sunrise, wandering through a market in Prague, or standing
+                        alone on a fog-soaked moor, I'm always searching for that quiet
+                        spark of truth. Sometimes it's found in the sharpness of a clear
+                        sky. Other times, it reveals itself only when the fog settles in
+                        and the world becomes simple again.
                     </p>
                 </div>
                 <p className="mt-8 font-serif text-2xl italic text-walnut">
