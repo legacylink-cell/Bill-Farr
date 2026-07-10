@@ -6,7 +6,7 @@ import { Instagram, Facebook, Mail, MapPin, Loader2 } from "lucide-react";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-const empty = { name: "", email: "", inquiry_type: "booking", subject: "", message: "" };
+const empty = { name: "", email: "", inquiry_type: "booking", subject: "", phone: "", message: "" };
 
 const types = [
     { v: "booking", l: "Book a shoot" },
@@ -161,6 +161,14 @@ export const Contact = ({ prefill }) => {
                         value={form.subject}
                         onChange={set("subject")}
                     />
+                    <input
+                        data-testid="contact-phone"
+                        type="tel"
+                        className={inputCls}
+                        placeholder="Phone number (optional)"
+                        value={form.phone}
+                        onChange={set("phone")}
+                    />
                     <textarea
                         data-testid="contact-message"
                         rows={4}
@@ -179,6 +187,17 @@ export const Contact = ({ prefill }) => {
                         {sending && <Loader2 size={16} className="animate-spin" />}
                         {sending ? "Sending" : "Send message"}
                     </button>
+
+                    <a
+                        href={`mailto:bill@billfarrphotography.com?subject=${encodeURIComponent(
+                            form.subject || "Photography inquiry"
+                        )}&body=${encodeURIComponent(form.message || "")}`}
+                        data-testid="contact-email-direct"
+                        className="-mt-1 flex items-center justify-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand/50 transition-colors hover:text-clay"
+                    >
+                        <Mail size={13} strokeWidth={1.4} />
+                        Prefer email? Write to Bill directly
+                    </a>
                 </motion.form>
             </div>
         </section>

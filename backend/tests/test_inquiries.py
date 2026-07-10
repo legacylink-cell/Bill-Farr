@@ -60,6 +60,46 @@ def test_create_inquiry_persists(api_client):
         assert "_id" not in it
 
 
+def test_create_inquiry_with_phone_persists(api_client):
+    """New for iteration 13: phone field is optional but must persist when supplied."""
+    unique = f"TEST_{uuid.uuid4().hex[:8]}"
+    phone = "+1-555-867-5309"
+    payload = {
+        "name": f"{unique} Phone",
+        "email": f"{unique}@example.com",
+        "message": "Please call me about a print order.",
+        "inquiry_type": "print",
+        "subject": "Print inquiry — phone",
+        "phone": phone,
+    }
+    r = api_client.post(f"{BASE_URL}/api/inquiries", json=payload)
+    assert r.status_code in (200, 201), r.text
+    body = r.json()
+    assert body.get("phone") == phone
+    assert body["inquiry_type"] == "print"
+
+    # Confirm via GET
+    r2 = api_client.get(f"{BASE_URL}/api/inquiries")
+    assert r2.status_code == 200
+    items = r2.json()
+    match = next((i for i in items if i.get("id") == body["id"]), None)
+    assert match is not None, "Phone inquiry not found in list"
+    assert match.get("phone") == phone
+
+
+def test_create_inquiry_without_phone_defaults_none(api_client):
+    unique = f"TEST_{uuid.uuid4().hex[:8]}"
+    payload = {
+        "name": f"{unique} NoPhone",
+        "email": f"{unique}@example.com",
+        "message": "no phone here",
+    }
+    r = api_client.post(f"{BASE_URL}/api/inquiries", json=payload)
+    assert r.status_code in (200, 201)
+    body = r.json()
+    assert body.get("phone") is None
+
+
 def test_create_inquiry_defaults_general(api_client):
     unique = f"TEST_{uuid.uuid4().hex[:8]}"
     payload = {

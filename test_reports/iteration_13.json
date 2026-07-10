@@ -1,0 +1,40 @@
+{
+  "summary": "Iteration 13 verified: (1) Travel gallery no longer crops images — all 4 travel items render at natural aspect ratio (travel-item-2 Big Ben: natural AR 1.052 ≈ rendered AR 1.052, no crop, watermark area intact). (2) Contact form phone field is persisted end-to-end and email-on-submit works (Emergent email proxy returns 202 Accepted; backend logs 'Inquiry email sent'). (3) contact-email-direct mailto link points to bill@billfarrphotography.com with subject/body query params. (4) All regression flows (hero, prints inquire prefill, journal modal, validation, no Emergent badge, zero console errors) pass. 10/10 backend pytest cases pass including two new phone tests.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "detailed_findings": {
+    "travel_images_no_crop": {
+      "travel-item-0 (Fog Bike)":   "natural 1700x1133 AR=1.500  rendered 1151x767  AR=1.500  ✓",
+      "travel-item-1 (Caddo)":      "natural 1700x1287 AR=1.321  rendered 1151x872  AR=1.321  ✓",
+      "travel-item-2 (Big Ben)":    "natural 1600x1521 AR=1.052  rendered 1151x1094 AR=1.052  ✓ (nearly square, no crop)",
+      "travel-item-3 (St Pauls)":   "natural 1355x844  AR=1.605  rendered 1151x717  AR=1.605  ✓"
+    },
+    "contact_email_direct_href": "mailto:bill@billfarrphotography.com?subject=Photography%20inquiry&body= ✓",
+    "displayed_contact_email": "bill@billfarrphotography.com ✓",
+    "form_validation": "Empty submit shows 'Please fill in your name, email and message.' toast and does NOT POST ✓",
+    "form_submit_e2e": "Filled name+email+phone(+1-555-013-1313)+booking+message → success toast 'on its way to Bill' ✓; form cleared to empty for all fields including phone ✓",
+    "phone_persistence": "GET /api/inquiries newest entry matches submitted email and phone == '+1-555-013-1313' ✓",
+    "email_send_backend_log": "httpx POST https://integrations.emergentagent.com/api/v1/email/send → 202 Accepted; 'Inquiry email sent to bill@billfarrphotography.com' logged for every POST",
+    "prints_inquire_prefill": "print-inquire-0 click sets contact-subject='Print inquiry — The Catch' and activates contact-type-print (bg-clay class) ✓",
+    "journal_modal": "Opens on journal-item-0 click, closes on Escape ✓",
+    "emergent_badge": "0 badge links present ✓",
+    "console_errors": "0 during full e2e flow",
+    "pytest_results": "10/10 passed in /app/backend/tests/test_inquiries.py (added test_create_inquiry_with_phone_persists and test_create_inquiry_without_phone_defaults_none)"
+  },
+  "test_report_links": ["/app/backend/tests/test_inquiries.py", "/app/test_reports/pytest/pytest_results.xml"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Nit (unchanged from iter12): success/error toast doesn't expose a data-testid — Playwright must fall back to text matching. Consider adding data-testid='contact-success' / 'contact-error' to Sonner toasts (functional behavior unaffected).",
+    "Nit: send_inquiry_email() is awaited inside the request handler — a slow email proxy (30s timeout) will delay the API response. If perceived latency ever becomes an issue, dispatch via BackgroundTasks."
+  ],
+  "updated_files": ["/app/backend/tests/test_inquiries.py"],
+  "success_rate": { "backend": "100% (10/10)", "frontend": "100%" },
+  "seed_data_creation": "Multiple TEST_ inquiries + one UI-submitted inquiry (email testui13_*@example.com, phone +1-555-013-1313) persisted to Mongo during this run.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 13 fully passes both the Travel image-crop fix and the email-on-submit + optional phone feature. Backend pytest suite now has 10 tests including phone persistence. Email delivery cannot be verified in an inbox — verified indirectly via backend logs showing 202 Accepted from the Emergent proxy. No regressions."
+}
