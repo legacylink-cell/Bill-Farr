@@ -121,6 +121,7 @@ export const Contact = ({ prefill }) => {
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                         <input
                             data-testid="contact-name"
+                            autoComplete="off"
                             className={inputCls}
                             placeholder="Your name"
                             value={form.name}
@@ -129,6 +130,7 @@ export const Contact = ({ prefill }) => {
                         <input
                             data-testid="contact-email-input"
                             type="email"
+                            autoComplete="off"
                             className={inputCls}
                             placeholder="Email address"
                             value={form.email}
@@ -156,6 +158,7 @@ export const Contact = ({ prefill }) => {
 
                     <input
                         data-testid="contact-subject"
+                        autoComplete="off"
                         className={inputCls}
                         placeholder="Subject (optional)"
                         value={form.subject}
@@ -164,6 +167,7 @@ export const Contact = ({ prefill }) => {
                     <input
                         data-testid="contact-phone"
                         type="tel"
+                        autoComplete="off"
                         className={inputCls}
                         placeholder="Phone number (optional)"
                         value={form.phone}
@@ -171,6 +175,7 @@ export const Contact = ({ prefill }) => {
                     />
                     <textarea
                         data-testid="contact-message"
+                        autoComplete="off"
                         rows={4}
                         className={`${inputCls} resize-none`}
                         placeholder="Tell me a little about it…"
