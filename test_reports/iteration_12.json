@@ -1,0 +1,42 @@
+{
+  "summary": "WebP conversion regression test: verified all images load, no 404s, adaptive logo swap works, lightbox/modal/contact flows still functional. All 7 required WebP assets return HTTP 200. Contact form submission persists to /api/inquiries.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "detailed_findings": {
+    "images_loaded": "17/17 <img> elements report naturalWidth>0 and complete=true (logo-light, hero-sunburst, portrait, 6 western images, 4 travel images, 3 print images, 1 duplicate logo in footer, journal modal img)",
+    "webp_asset_http_status": {
+      "/hero-sunburst.webp": "200 image/webp 144KB",
+      "/portrait.webp": "200 image/webp 27KB",
+      "/logo-dark.webp": "200 image/webp 29KB",
+      "/logo-light.webp": "200 image/webp 44KB",
+      "/west-riders.webp": "200 image/webp 121KB",
+      "/travel-caddo.webp": "200 image/webp 332KB",
+      "/sunburst-print.webp": "200 image/webp 142KB"
+    },
+    "no_legacy_references": "grep across /app/frontend/src and /app/frontend/public for .jpg/.jpeg/.png returned zero matches",
+    "no_failed_image_requests": "0 image requests with status >=400 during full-page scroll",
+    "navbar_adaptive_logo": "Top: /logo-light.webp ✓  |  After scroll >40px: /logo-dark.webp ✓",
+    "western_lightbox": "Opens on click, next-cycle works, close works",
+    "travel_no_lightbox": "4 travel items rendered; no lightbox trigger (as expected)",
+    "prints_inquire_prefill": "print-inquire-0 click prefills contact-subject with 'Print inquiry — The Catch'",
+    "journal_modal": "Opens and closes correctly",
+    "contact_form": "Submit shows 'Thank you — your message is on its way to Bill.' toast; GET /api/inquiries count increased 15 -> 16 confirming persistence",
+    "console_errors": "0 console errors during full flow",
+    "emergent_badge": "Not present"
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Minor: contact-success test-id doesn't seem to be attached to the visible success toast — the toast text 'Thank you — your message is on its way to Bill.' is rendered but query_selector('[data-testid=\"contact-success\"]') returned null. Consider adding data-testid=\"contact-success\" to the success toast element for cleaner test hooks (functional behavior unaffected)."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "n/a (frontend-only)", "frontend": "100%" },
+  "seed_data_creation": "One TEST_ inquiry created via UI contact form (persisted to Mongo).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "WebP conversion iteration 12 fully passes. All public images are .webp, no legacy .jpg/.png references remain, and all image loads verified (naturalWidth>0 + HTTP 200). Adaptive logo, lightbox, prints inquiry prefill, journal modal, contact form persistence, and console cleanliness all verified. Only nit: consider adding data-testid to contact success toast."
+}

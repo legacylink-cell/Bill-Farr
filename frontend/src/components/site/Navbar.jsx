@@ -44,7 +44,7 @@ export const Navbar = () => {
                     className="text-left leading-none"
                 >
                     <img
-                        src={scrolled ? "/logo-dark.png" : "/logo-light.png"}
+                        src={scrolled ? "/logo-dark.webp" : "/logo-light.webp"}
                         alt="Bill Farr Photography"
                         className="h-11 w-auto md:h-14"
                     />

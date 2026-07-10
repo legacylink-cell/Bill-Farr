@@ -5,7 +5,7 @@ export const Footer = () => {
                 <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
                     <div>
                         <img
-                            src="/logo-light.png"
+                            src="/logo-light.webp"
                             alt="Bill Farr Photography"
                             className="h-14 w-auto md:h-16"
                         />

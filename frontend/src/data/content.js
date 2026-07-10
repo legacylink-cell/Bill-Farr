@@ -1,42 +1,42 @@
 // Central content + imagery for the Bill Farr photography site.
 // All imagery is Bill Farr's own work, optimized and served from /public.
-export const PORTRAIT = "/portrait.png";
-export const HERO_HORSES = "/hero-sunburst.jpg";
+export const PORTRAIT = "/portrait.webp";
+export const HERO_HORSES = "/hero-sunburst.webp";
 
 // Western grid uses fixed-height grid rows + object-cover, so no empty frames.
 export const western = [
     {
-        src: "/west-horsedrive.jpg",
+        src: "/west-horsedrive.webp",
         title: "The Drive",
         location: "Westcliffe, Colorado",
         cls: "md:col-span-8 md:row-span-2",
     },
     {
-        src: "/west-wrangler.jpg",
+        src: "/west-wrangler.webp",
         title: "Before the Ride",
         location: "Westcliffe, Colorado",
         cls: "md:col-span-4 md:row-span-2",
     },
     {
-        src: "/west-riders.jpg",
+        src: "/west-riders.webp",
         title: "The Wranglers",
         location: "Westcliffe, Colorado",
         cls: "md:col-span-6 md:row-span-2",
     },
     {
-        src: "/west-roping.jpg",
+        src: "/west-roping.webp",
         title: "The Catch",
         location: "Moab, Utah",
         cls: "md:col-span-6 md:row-span-2",
     },
     {
-        src: "/west-herd.jpg",
+        src: "/west-herd.webp",
         title: "The Remuda",
         location: "Westcliffe, Colorado",
         cls: "md:col-span-7 md:row-span-2",
     },
     {
-        src: "/west-longhorn.jpg",
+        src: "/west-longhorn.webp",
         title: "Longhorn",
         location: "Texas Hill Country",
         cls: "md:col-span-5 md:row-span-2",
@@ -45,22 +45,22 @@ export const western = [
 
 export const travel = [
     {
-        src: "/travel-fog-bike.jpg",
+        src: "/travel-fog-bike.webp",
         title: "Morning Fog",
         location: "Greenwich Park, London",
     },
     {
-        src: "/travel-caddo.jpg",
+        src: "/travel-caddo.webp",
         title: "Cypress Water",
         location: "Caddo Lake, Texas",
     },
     {
-        src: "/travel-bigben.jpg",
+        src: "/travel-bigben.webp",
         title: "Westminster After Dark",
         location: "London, England",
     },
     {
-        src: "/travel-stpauls.jpg",
+        src: "/travel-stpauls.webp",
         title: "St Paul's After Dark",
         location: "Millennium Bridge, London",
     },
@@ -68,19 +68,19 @@ export const travel = [
 
 export const prints = [
     {
-        src: "/west-roping.jpg",
+        src: "/west-roping.webp",
         title: "The Catch",
         edition: "Edition of 25 · Archival Pigment",
         price: "$480",
     },
     {
-        src: "/sunburst-print.jpg",
+        src: "/sunburst-print.webp",
         title: "First Light, Moab",
         edition: "Edition of 15 · Museum Fine Art",
         price: "$680",
     },
     {
-        src: "/travel-caddo.jpg",
+        src: "/travel-caddo.webp",
         title: "Cypress Water",
         edition: "Edition of 30 · Archival Pigment",
         price: "$390",
@@ -89,7 +89,7 @@ export const prints = [
 
 export const journal = [
     {
-        src: "/west-horsedrive.jpg",
+        src: "/west-horsedrive.webp",
         date: "May 2026",
         readtime: "6 min read",
         title: "Chasing the last light over the divide",
@@ -102,7 +102,7 @@ export const journal = [
         ],
     },
     {
-        src: "/west-roping.jpg",
+        src: "/west-roping.webp",
         date: "Mar 2026",
         readtime: "4 min read",
         title: "Notes from a week on the working ranch",
@@ -115,7 +115,7 @@ export const journal = [
         ],
     },
     {
-        src: "/travel-fog-bike.jpg",
+        src: "/travel-fog-bike.webp",
         date: "Jan 2026",
         readtime: "8 min read",
         title: "Why I still shoot film in the backcountry",
