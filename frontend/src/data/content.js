@@ -18,22 +18,28 @@ export const western = [
         cls: "md:col-span-4 md:row-span-2",
     },
     {
+        src: "/west-riders.jpg",
+        title: "The Wranglers",
+        location: "Westcliffe, Colorado",
+        cls: "md:col-span-6 md:row-span-2",
+    },
+    {
         src: "/west-roping.jpg",
         title: "The Catch",
         location: "Moab, Utah",
-        cls: "md:col-span-5 md:row-span-2",
-    },
-    {
-        src: "/west-longhorn.jpg",
-        title: "Longhorn",
-        location: "Texas Hill Country",
-        cls: "md:col-span-7 md:row-span-2",
+        cls: "md:col-span-6 md:row-span-2",
     },
     {
         src: "/west-herd.jpg",
         title: "The Remuda",
         location: "Westcliffe, Colorado",
-        cls: "md:col-span-12 md:row-span-2",
+        cls: "md:col-span-7 md:row-span-2",
+    },
+    {
+        src: "/west-longhorn.jpg",
+        title: "Longhorn",
+        location: "Texas Hill Country",
+        cls: "md:col-span-5 md:row-span-2",
     },
 ];
 
@@ -68,7 +74,7 @@ export const prints = [
         price: "$480",
     },
     {
-        src: "/hero-sunburst.jpg",
+        src: "/sunburst-print.jpg",
         title: "First Light, Moab",
         edition: "Edition of 15 · Museum Fine Art",
         price: "$680",

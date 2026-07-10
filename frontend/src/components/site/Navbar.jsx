@@ -43,12 +43,11 @@ export const Navbar = () => {
                     onClick={() => go("hero")}
                     className="text-left leading-none"
                 >
-                    <span className="block font-serif text-xl tracking-tight text-walnut md:text-2xl">
-                        Bill Farr
-                    </span>
-                    <span className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-clay">
-                        Western · Travel
-                    </span>
+                    <img
+                        src={scrolled ? "/logo-dark.png" : "/logo-light.png"}
+                        alt="Bill Farr Photography"
+                        className="h-11 w-auto md:h-14"
+                    />
                 </button>
 
                 <div className="hidden items-center gap-9 md:flex">
@@ -57,7 +56,11 @@ export const Navbar = () => {
                             key={l.id}
                             data-testid={`nav-${l.id}`}
                             onClick={() => go(l.id)}
-                            className="link-underline font-mono text-[0.7rem] uppercase tracking-[0.2em] text-ink transition-colors hover:text-walnut"
+                            className={`link-underline font-mono text-[0.7rem] uppercase tracking-[0.2em] transition-colors ${
+                                scrolled
+                                    ? "text-ink hover:text-walnut"
+                                    : "text-sand/90 hover:text-sand [text-shadow:0_1px_10px_rgba(0,0,0,0.4)]"
+                            }`}
                         >
                             {l.label}
                         </button>
@@ -65,7 +68,11 @@ export const Navbar = () => {
                     <button
                         data-testid="nav-contact"
                         onClick={() => go("contact")}
-                        className="border border-walnut px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-walnut transition-colors duration-300 hover:bg-walnut hover:text-sand"
+                        className={`border px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.2em] transition-colors duration-300 ${
+                            scrolled
+                                ? "border-walnut text-walnut hover:bg-walnut hover:text-sand"
+                                : "border-sand text-sand hover:bg-sand hover:text-walnut"
+                        }`}
                     >
                         Book a shoot
                     </button>
@@ -73,7 +80,7 @@ export const Navbar = () => {
 
                 <button
                     data-testid="nav-mobile-toggle"
-                    className="text-walnut md:hidden"
+                    className={`md:hidden ${scrolled ? "text-walnut" : "text-sand"}`}
                     onClick={() => setOpen((v) => !v)}
                     aria-label="Menu"
                 >

@@ -4,10 +4,11 @@ export const Footer = () => {
             <div className="mx-auto max-w-[1500px] border-t border-[var(--border-dark)] px-6 py-10 md:px-12">
                 <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
                     <div>
-                        <p className="font-serif text-2xl">Bill Farr</p>
-                        <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-sand/50">
-                            Western · Travel Photography
-                        </p>
+                        <img
+                            src="/logo-light.png"
+                            alt="Bill Farr Photography"
+                            className="h-14 w-auto md:h-16"
+                        />
                     </div>
                     <p className="max-w-xs font-serif text-lg italic text-sand/60">
                         "The best photographs are the ones you had to be present for."

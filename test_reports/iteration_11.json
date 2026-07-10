@@ -1,0 +1,29 @@
+{
+  "summary": "Frontend-only smoke test after signature logo + 6th western photo + baked-in watermarks. All 8 review targets pass: adaptive nav logo swap (light->dark on scroll >40px), footer logo, 6 western items with new /west-riders.jpg 'The Wranglers' at index 2, lightbox cycles through all 6 unique sources, travel 4 + prints 3 all load, journal modal open/close, contact prefill + inquiry_type=print + form submit + persistence via GET /api/inquiries, no broken images, no 'Made with Emergent' badge, no console errors.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": ["/app/test_reports/iteration_11.json"],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Contact.jsx uses two different testids: contact-email (the mailto <a>) and contact-email-input (the actual form <input>). Fine, but easy to confuse — the initial review request said 'contact form submit still works and persists via GET /api/inquiries' — email input testid is contact-email-input.",
+    "Lightbox.jsx uses data-testid='lightbox' (single, shared by both galleries). Review request refers to 'western-lightbox' — the actual testid is just 'lightbox'. Not a bug, just naming.",
+    "Navbar swaps <img> src based on 'scrolled' state which triggers a network re-fetch on each toggle (both files already exist in /app/frontend/public so no 404). Optionally could preload both. Not blocking.",
+    "Western grid uses md:auto-rows-[180px] with row-span-2 (360px tall tiles) — new 6th item (col-5) fits alongside col-7 in the third row cleanly. Layout verified visually.",
+    "west-riders.jpg (210KB), sunburst-print.jpg (301KB), logo-light.png (87KB), logo-dark.png (47KB) all present in /app/frontend/public with expected sizes."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (frontend-only)", "frontend": "100%"},
+  "test_credentials": "N/A - no auth on this app",
+  "seed_data_creation": "Submitted one test inquiry TEST_Iter11_User / TEST_iter11@example.com via contact form. Verified in GET /api/inquiries (count=15, TEST_Iter11_User present).",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All 8 review items verified. Detailed evidence: (1) Navbar: at top scrollY=0 → src=/logo-light.png (naturalWidth=760); after window.__lenis.scrollTo(600) → src=/logo-dark.png (naturalWidth=760); clicking nav-logo returns to hero (scrollY=0). (2) Footer: img /logo-light.png (nw=760), footer-credit href=https://mozeid.com/ intact. (3) Western has 6 items western-item-0..5 all with nw>0: (0)/west-horsedrive.jpg=The Drive/Westcliffe, (1)/west-wrangler.jpg=Before the Ride/Westcliffe, (2)/west-riders.jpg=The Wranglers/Westcliffe [NEW], (3)/west-roping.jpg=The Catch/Moab, (4)/west-herd.jpg=The Remuda/Westcliffe, (5)/west-longhorn.jpg=Longhorn/Texas Hill Country. All tiles fully filled (aspect ratios preserved via object-cover + md:h-full). (4) Lightbox: opens on item-2, next cycles through all 6 unique sources and wraps back to west-riders.jpg (verified 6 unique of 7 clicks), prev works, close works. Note: lightbox testid is 'lightbox' (single), not 'western-lightbox'. (5) Travel 4/4 load (fog-bike, caddo, bigben, stpauls), Prints 3/3 load (west-roping, sunburst-print, travel-caddo), print-inquire-0 prefills contact-subject='Print inquiry — The Catch' and contact-type-print gets bg-clay active class. (6) Journal item-0 opens journal-modal with title 'Chasing the last light over the divide', modal img nw=1700, close via journal-modal-close X works. (7) All 18 imgs on page have naturalWidth>0 (0 broken). (8) Contact form submit persisted TEST_Iter11_User to GET /api/inquiries (200, count=15, found=True), toast 'Thank you — your message is on its way to Bill.' displayed. Zero console errors. No 'Made with Emergent' badge. Note: email input testid = 'contact-email-input' (contact-email is the mailto link).",
+  "rca of the issue": "N/A — no issues found. All watermarking, adaptive logo, and expanded western gallery changes work as intended."
+}
