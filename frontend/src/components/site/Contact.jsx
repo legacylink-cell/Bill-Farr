@@ -73,12 +73,12 @@ export const Contact = ({ prefill }) => {
 
                     <div className="mt-12 space-y-5">
                         <a
-                            href="mailto:hello@billfarr.photo"
+                            href="mailto:bill@billfarrphotography.com"
                             data-testid="contact-email"
                             className="flex items-center gap-4 text-sand/80 transition-colors hover:text-clay"
                         >
                             <Mail strokeWidth={1.2} size={20} />
-                            <span className="font-mono text-sm tracking-wide">hello@billfarr.photo</span>
+                            <span className="font-mono text-sm tracking-wide">bill@billfarrphotography.com</span>
                         </a>
                         <a
                             href="https://instagram.com"
