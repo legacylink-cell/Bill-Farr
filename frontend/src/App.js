@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "@/App.css";
 import Lenis from "lenis";
 import { Toaster } from "sonner";
@@ -7,14 +7,11 @@ import { Hero } from "@/components/site/Hero";
 import { About } from "@/components/site/About";
 import { WesternGallery } from "@/components/site/WesternGallery";
 import { TravelGallery } from "@/components/site/TravelGallery";
-import { Prints } from "@/components/site/Prints";
 import { Journal } from "@/components/site/Journal";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 
 function App() {
-    const [prefill, setPrefill] = useState(null);
-
     useEffect(() => {
         const lenis = new Lenis({ lerp: 0.14, wheelMultiplier: 1, smoothWheel: true });
         window.__lenis = lenis;
@@ -30,13 +27,6 @@ function App() {
             window.__lenis = null;
         };
     }, []);
-
-    const inquirePrint = (title) => {
-        setPrefill({ inquiry_type: "print", subject: `Print inquiry — ${title}` });
-        const el = document.getElementById("contact");
-        if (window.__lenis) window.__lenis.scrollTo(el, { offset: -20 });
-        else el?.scrollIntoView({ behavior: "smooth" });
-    };
 
     return (
         <div className="App grain">
@@ -58,9 +48,8 @@ function App() {
                 <About />
                 <WesternGallery />
                 <TravelGallery />
-                <Prints onInquire={inquirePrint} />
                 <Journal />
-                <Contact prefill={prefill} />
+                <Contact />
             </main>
             <Footer />
         </div>
