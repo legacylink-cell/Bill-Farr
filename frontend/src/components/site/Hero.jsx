@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import { HERO_HORSES } from "../../data/content";
 
 const go = (id) => {
@@ -8,19 +9,29 @@ const go = (id) => {
 };
 
 export const Hero = () => {
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start start", "end start"],
+    });
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "-14%"]);
+    const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+
     return (
         <section
             id="hero"
+            ref={ref}
             data-testid="hero"
             className="relative flex h-[100svh] w-full items-end overflow-hidden"
         >
             <motion.img
                 src={HERO_HORSES}
-                alt="Wild horses running across the high plains"
-                className="absolute inset-0 h-full w-full object-cover"
-                initial={{ scale: 1.12 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
+                alt="Bill Farr — cowboy on horseback at sunrise in the red-rock country near Moab, Utah"
+                className="absolute left-0 top-0 h-[120%] w-full object-cover will-change-transform"
+                style={{ y, scale }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-walnut/90 via-walnut/45 to-walnut/50" />
 
