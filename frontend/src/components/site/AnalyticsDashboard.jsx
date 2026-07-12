@@ -12,16 +12,23 @@ const Stat = ({ icon, label, value }) => (
     </div>
 );
 
+const isInsightsRoute = () =>
+    window.location.hash === "#insights" || window.location.pathname.replace(/\/$/, "") === "/insights";
+
 export const AnalyticsDashboard = () => {
-    const [open, setOpen] = useState(window.location.hash === "#insights");
+    const [open, setOpen] = useState(isInsightsRoute());
     const [key, setKey] = useState(localStorage.getItem("bf_ak") || "");
     const [data, setData] = useState(null);
     const [err, setErr] = useState("");
 
     useEffect(() => {
-        const h = () => setOpen(window.location.hash === "#insights");
+        const h = () => setOpen(isInsightsRoute());
         window.addEventListener("hashchange", h);
-        return () => window.removeEventListener("hashchange", h);
+        window.addEventListener("popstate", h);
+        return () => {
+            window.removeEventListener("hashchange", h);
+            window.removeEventListener("popstate", h);
+        };
     }, []);
 
     const load = async () => {
@@ -43,7 +50,11 @@ export const AnalyticsDashboard = () => {
     if (!open) return null;
 
     const close = () => {
-        window.location.hash = "";
+        if (window.location.pathname.replace(/\/$/, "") === "/insights") {
+            window.history.replaceState(null, "", "/");
+        } else {
+            window.location.hash = "";
+        }
         setOpen(false);
     };
 
