@@ -27,6 +27,13 @@ EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY")
 EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Bill Farr Photography")
 BILL_EMAIL = "bill@billfarrphotography.com"
 ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
+# Referrer hosts to exclude from analytics (internal dev/editor traffic)
+EXCLUDED_REFERRERS = ("emergent",)
+
+
+def _is_internal_ref(referrer: str, ref_host: str) -> bool:
+    hay = f"{referrer or ''} {ref_host or ''}".lower()
+    return any(x in hay for x in EXCLUDED_REFERRERS)
 
 app = FastAPI(title="Bill Farr Photography API")
 api_router = APIRouter(prefix="/api")
@@ -149,6 +156,8 @@ async def track_event(ev: TrackEvent, request: Request):
     ua = request.headers.get("user-agent", "")
     device = "mobile" if ("Mobi" in ua or "Android" in ua) else "desktop"
     ref_host = urlparse(ev.referrer or "").netloc or "direct"
+    if _is_internal_ref(ev.referrer or "", ref_host):
+        return {"ok": True, "skipped": True}
     await db.analytics.insert_one({
         "type": ev.type,
         "path": ev.path or "/",
@@ -164,6 +173,8 @@ async def analytics_summary(key: str):
     if not ANALYTICS_KEY or key != ANALYTICS_KEY:
         raise HTTPException(status_code=401, detail="Invalid access key")
     docs = await db.analytics.find({}, {"_id": 0}).to_list(200000)
+    # Exclude any internal/dev referrers (e.g. the Emergent editor) retroactively
+    docs = [d for d in docs if not _is_internal_ref("", d.get("ref_host", ""))]
     now = datetime.now(timezone.utc)
     views = [d for d in docs if d.get("type") == "pageview"]
     inquiries = [d for d in docs if d.get("type") == "inquiry"]
