@@ -3,6 +3,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { Mail, MapPin, Loader2 } from "lucide-react";
+import { track } from "../../lib/analytics";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -34,6 +35,7 @@ export const Contact = ({ prefill }) => {
             await axios.post(`${API}/inquiries`, form);
             toast.success("Thank you — your message is on its way to Bill.");
             setForm(empty);
+            track("inquiry");
         } catch {
             toast.error("Something went wrong. Please try again.");
         } finally {

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { travel } from "../../data/content";
+import { ParallaxImage } from "./ParallaxImage";
 
 export const TravelGallery = () => {
     return (
@@ -35,15 +36,7 @@ export const TravelGallery = () => {
                             viewport={{ once: true, margin: "-80px" }}
                             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            <div className="overflow-hidden">
-                                <img
-                                    src={img.src}
-                                    alt={img.title}
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
-                                />
-                            </div>
+                            <ParallaxImage src={img.src} alt={img.title} />
                             <figcaption className="mt-4 flex items-baseline justify-between gap-6">
                                 <span className="font-serif text-3xl text-sand md:text-4xl">
                                     <span className="text-clay">{String(i + 1).padStart(2, "0")}</span>{" "}

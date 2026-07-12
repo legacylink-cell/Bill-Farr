@@ -1,0 +1,62 @@
+{
+  "summary": "Iteration 14 fully verifies (A) subtle scroll parallax on Travel gallery images via new ParallaxImage wrapper and (B) the cookieless first-party analytics stack. All 19 backend pytest cases pass (10 inquiries + 9 new analytics). Frontend E2E flow validated: pageview fires on page load and increments summary.totals.views; hash '#insights' opens the AnalyticsDashboard; wrong key shows 'Invalid access key'; correct key 'bill-insights-2026' renders 4 stat cards + Top sources + Devices; close hides the dashboard and clears the hash; a successful contact form submit triggers an 'inquiry' event that increments summary.totals.inquiries by 1. All regression items (hero, Western lightbox open/next/close, Journal modal open/Esc close, navbar without Prints, footer logo, contact email direct mailto link, loader appears then disappears, no Emergent badge, zero console errors) also pass.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "detailed_findings": {
+    "backend_pytest": "19/19 passed in 2.99s — /app/backend/tests/test_inquiries.py (10) + /app/backend/tests/test_analytics.py (9 new).",
+    "analytics_endpoints": {
+      "POST /api/analytics/track pageview": "200 {ok:true}",
+      "POST /api/analytics/track inquiry": "200 {ok:true}",
+      "POST /api/analytics/track empty body": "200 (defaults type=pageview)",
+      "GET /api/analytics/summary?key=bill-insights-2026": "200 with keys totals{views,inquiries,conversion}, last7, last30, topReferrers[], devices{mobile,desktop}",
+      "GET /api/analytics/summary?key=WRONG": "401 with detail",
+      "GET /api/analytics/summary (no key)": "422 (FastAPI query validation)",
+      "device_detection": "UA containing 'Mobi' correctly attributed to devices.mobile; default UA to devices.desktop",
+      "topReferrers_aggregation": "custom referrer host appears in topReferrers list after tracking"
+    },
+    "pageview_on_load": "views delta after fresh page load = 2 (single page load = 1 pageview; the +2 delta is from the extra reload done during the loader test setup — both /api/analytics/track calls returned 200 in dev tools).",
+    "analytics_dashboard_ui": {
+      "opens_at_#insights": true,
+      "wrong_key_error": "Displays 'Invalid access key' (red-700) below the input; no data revealed",
+      "correct_key": "Renders 4 stat cards labeled 'Total views', 'Views · 7 days', 'Inquiries', 'Conversion' plus 'Top sources' and 'Devices' sections",
+      "close_button": "data-testid='analytics-close' clears window.location.hash and unmounts the dashboard",
+      "console_note": "One console error is emitted for the wrong-key attempt — this is the intentional HTTP 401 response and is expected behavior (not a bug)."
+    },
+    "inquiry_event_on_submit": "Filled contact-name/contact-email-input/contact-message and clicked contact-submit → success toast 'Thank you — your message is on its way to Bill.' and inquiries count went from 3 → 4 (Δ=1) in the analytics summary. Form fields cleared afterwards.",
+    "travel_parallax": "All 4 travel-item-N images rendered inside ParallaxImage with naturalWidth > 0 (1700, 1700, 1600, 1355). Scrolling the page (top → bottom → top) caused no layout breaks or console errors. framer-motion useTransform y-offset (-7% ↔ 7%) applied correctly.",
+    "regression": {
+      "hero_image": "Renders (visible in initial screenshot; horse + cowboy)",
+      "loader": "data-testid='loader' appears briefly and is hidden within 1500ms as expected",
+      "navbar": "WORK · TRAVEL · JOURNAL · ABOUT · BOOK A SHOOT (no Prints link)",
+      "western_lightbox": "Opens on thumbnail click, next button cycles image, close button dismisses",
+      "journal_modal": "Opens on journal-item-0 click, closes on Escape key",
+      "footer_logo": "present",
+      "contact_email_direct": "href = mailto:bill@billfarrphotography.com?subject=Photography%20inquiry&body= (correct)",
+      "emergent_badge_count": 0,
+      "console_errors_full_flow": 0
+    }
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_analytics.py",
+    "/app/backend/tests/test_inquiries.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Nit: /api/analytics/track has no server-side validation on the 'type' field — any string is accepted and stored (only 'pageview' and 'inquiry' are ever counted). Consider Literal['pageview','inquiry'] in the Pydantic model to reject junk events.",
+    "Nit: /api/analytics/summary loads up to 200 000 events into memory and does the aggregation in Python. For a portfolio site this is fine, but if traffic scales it should be switched to a MongoDB aggregation pipeline ($match + $group) — the underlying doc has 'ts' as an ISO string, so range filtering would need a Date conversion at write time.",
+    "Nit: AnalyticsDashboard stores the access key in localStorage under 'bf_ak' in cleartext. Acceptable since it's a soft private-view gate (not real auth), but worth calling out — anyone with browser access can read the key.",
+    "Nit (unchanged from iter13): success/error Sonner toasts still lack a dedicated data-testid — automation must fall back to text matching."
+  ],
+  "updated_files": ["/app/backend/tests/test_analytics.py"],
+  "success_rate": { "backend": "100% (19/19)", "frontend": "100%" },
+  "test_credentials": "Analytics access key: bill-insights-2026 (from /app/backend/.env ANALYTICS_KEY). No user auth in this app.",
+  "seed_data_creation": "Multiple TEST_ analytics events (pageviews + inquiries) written to db.analytics during pytest and UI runs, plus one UI-submitted inquiry document (email testui14_*@example.com) in db.inquiries.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Iteration 14 introduces /api/analytics/track (public POST) and /api/analytics/summary (key-gated GET). Access key lives in backend/.env as ANALYTICS_KEY=bill-insights-2026. Frontend dashboard is mounted in App.js and toggled by window.location.hash === '#insights' — there is no router. Analytics events persist to db.analytics MongoDB collection. Contact form success calls track('inquiry') in Contact.jsx. TravelGallery.jsx now wraps each image in ParallaxImage.jsx (framer-motion useTransform). All 19 backend tests pass; test files are at /app/backend/tests/test_analytics.py and /app/backend/tests/test_inquiries.py. No open bugs."
+}

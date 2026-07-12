@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException
+from fastapi import FastAPI, APIRouter, HTTPException, Request
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -26,6 +26,7 @@ EMAIL_BASE_URL = "https://integrations.emergentagent.com"
 EMAIL_KEY = os.environ.get("EMERGENT_EMAIL_KEY")
 EMAIL_FROM_NAME = os.environ.get("EMAIL_FROM_NAME", "Bill Farr Photography")
 BILL_EMAIL = "bill@billfarrphotography.com"
+ANALYTICS_KEY = os.environ.get("ANALYTICS_KEY")
 
 app = FastAPI(title="Bill Farr Photography API")
 api_router = APIRouter(prefix="/api")
@@ -134,6 +135,67 @@ async def create_inquiry(payload: InquiryCreate):
 async def list_inquiries():
     docs = await db.inquiries.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
     return [Inquiry(**d) for d in docs]
+
+
+class TrackEvent(BaseModel):
+    type: str = "pageview"
+    path: Optional[str] = None
+    referrer: Optional[str] = None
+
+
+@api_router.post("/analytics/track")
+async def track_event(ev: TrackEvent, request: Request):
+    from urllib.parse import urlparse
+    ua = request.headers.get("user-agent", "")
+    device = "mobile" if ("Mobi" in ua or "Android" in ua) else "desktop"
+    ref_host = urlparse(ev.referrer or "").netloc or "direct"
+    await db.analytics.insert_one({
+        "type": ev.type,
+        "path": ev.path or "/",
+        "ref_host": ref_host,
+        "device": device,
+        "ts": datetime.now(timezone.utc).isoformat(),
+    })
+    return {"ok": True}
+
+
+@api_router.get("/analytics/summary")
+async def analytics_summary(key: str):
+    if not ANALYTICS_KEY or key != ANALYTICS_KEY:
+        raise HTTPException(status_code=401, detail="Invalid access key")
+    docs = await db.analytics.find({}, {"_id": 0}).to_list(200000)
+    now = datetime.now(timezone.utc)
+    views = [d for d in docs if d.get("type") == "pageview"]
+    inquiries = [d for d in docs if d.get("type") == "inquiry"]
+
+    def within(days, items):
+        cutoff = now.timestamp() - days * 86400
+        n = 0
+        for d in items:
+            try:
+                if datetime.fromisoformat(d["ts"]).timestamp() >= cutoff:
+                    n += 1
+            except Exception:
+                pass
+        return n
+
+    refs = {}
+    for d in views:
+        h = d.get("ref_host", "direct") or "direct"
+        refs[h] = refs.get(h, 0) + 1
+    top = sorted(refs.items(), key=lambda x: -x[1])[:6]
+
+    mobile = sum(1 for d in views if d.get("device") == "mobile")
+    total_views = len(views)
+    conversion = round((len(inquiries) / total_views) * 100, 1) if total_views else 0.0
+
+    return {
+        "totals": {"views": total_views, "inquiries": len(inquiries), "conversion": conversion},
+        "last7": within(7, views),
+        "last30": within(30, views),
+        "topReferrers": [{"host": h, "count": c} for h, c in top],
+        "devices": {"mobile": mobile, "desktop": total_views - mobile},
+    }
 
 
 app.include_router(api_router)

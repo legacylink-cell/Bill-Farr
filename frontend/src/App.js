@@ -5,6 +5,8 @@ import { AnimatePresence } from "framer-motion";
 import { Toaster } from "sonner";
 import { Navbar } from "@/components/site/Navbar";
 import { Loader } from "@/components/site/Loader";
+import { AnalyticsDashboard } from "@/components/site/AnalyticsDashboard";
+import { track } from "@/lib/analytics";
 import { Hero } from "@/components/site/Hero";
 import { About } from "@/components/site/About";
 import { WesternGallery } from "@/components/site/WesternGallery";
@@ -18,6 +20,7 @@ function App() {
 
     useEffect(() => {
         const t = setTimeout(() => setLoading(false), 1500);
+        track("pageview");
         return () => clearTimeout(t);
     }, []);
 
@@ -62,6 +65,7 @@ function App() {
                 <Contact />
             </main>
             <Footer />
+            <AnalyticsDashboard />
         </div>
     );
 }
