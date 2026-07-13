@@ -38,7 +38,7 @@ export const western = [
     {
         src: "/west-longhorn.webp",
         title: "Longhorn",
-        location: "Texas Hill Country",
+        location: "West Texas Ranch",
         cls: "md:col-span-5 md:row-span-2",
     },
 ];
@@ -91,40 +91,40 @@ export const journal = [
     {
         src: "/west-horsedrive.webp",
         date: "May 2026",
-        readtime: "6 min read",
-        title: "Chasing the last light over the divide",
+        readtime: "3 min read",
+        title: "The Quiet Art of Horsemanship",
         excerpt:
-            "Three days above treeline waiting for a storm to break — and the ten minutes that made it all worth it.",
+            "Not through strength, but through patience, skill, and trust — a cowgirl reads the herd and lets the horse decide.",
         body: [
-            "Some photographs you plan for months. Others you simply have to be present for. This one was both. I'd been tracking the weather over the divide for the better part of a week, watching a slow front push in from the west and hoping it would clear just before sundown.",
-            "It didn't clear. Not really. But in the last ten minutes of light, a single seam opened in the clouds and dropped a band of gold across the ridge. I made maybe forty frames. This is the one I keep coming back to.",
-            "The lesson, if there is one, is patience. The mountains don't owe you anything. You show up, you wait, and every so often the light decides to run wild for a moment — and your only job is to be ready when it does.",
+            "With calm confidence, she guided her own horse into position. Every movement was deliberate. Instead of chasing or forcing the horse away, she used pressure and timing, allowing the horse to make the decision to leave the herd. The rest of the horses shifted and swirled, but her focus never wavered.",
+            "Finally, the horse broke away from the herd and moved into the open. The cowgirl relaxed the reins and gave her horse a gentle pat on the neck. The job was done—not through strength, but through patience, skill, and trust.",
+            "The picture captures more than a routine ranch task. It tells the story of horsemanship at its finest: a cowgirl and her horse working in harmony, demonstrating the quiet art of reading livestock, making split-second decisions, and earning respect rather than demanding it. In that single moment frozen in time, years of practice, partnership, and western tradition come to life.",
         ],
     },
     {
         src: "/west-roping.webp",
         date: "Mar 2026",
-        readtime: "4 min read",
-        title: "Notes from a week on the working ranch",
+        readtime: "3 min read",
+        title: "The Spirit of the Wrangler",
         excerpt:
-            "What a week among horses and the people who work them taught me about photographing honest moments.",
+            "Ropes whirling against a golden sky — a moment of wild energy on the open range.",
         body: [
-            "There's a rhythm to a working ranch that you can't fake and can't rush. The horses know it before you do. My first morning I put the camera down for a few hours and just watched — and that was the best decision I made all week.",
-            "By the third day the herd had stopped noticing me. That's when the real photographs started: the quiet ones, between the action, where you see the trust between an animal and the hands that care for it.",
-            "I came home with a hard drive full of frames and a deeper respect for a way of life that's slower, harder, and more honest than anything I'm used to.",
+            "The photograph freezes a moment of wild energy on the open range. A group of wranglers gallops across the dusty plain, their horses stretching forward with powerful strides. Sunlight catches the clouds of dust rising behind them, turning the air golden. Above their heads, ropes whirl in wide circles, tracing loops against the bright sky.",
+            "For these riders, the rope is more than a tool—it is part of a tradition passed down through generations. As they race together, each swing is guided by skill, timing, and trust between horse and rider. The scene captures both movement and teamwork, telling a story of life on the frontier where courage, hard work, and horsemanship shaped every day.",
+            "Though the moment lasts only a fraction of a second, the image preserves the spirit of the West: freedom, adventure, and the enduring bond between wranglers and their horses.",
         ],
     },
     {
         src: "/travel-fog-bike.webp",
         date: "Jan 2026",
-        readtime: "8 min read",
-        title: "Why I still shoot film in the backcountry",
+        readtime: "3 min read",
+        title: "Between Visibility and Mystery",
         excerpt:
-            "In an age of infinite frames, choosing 36 exposures forces you to see differently. Here's why I still carry a film body.",
+            "A lone cyclist emerges from the fog, pressing forward into the unknown.",
         body: [
-            "Digital is a gift. I'd never argue otherwise. But there's something about loading a roll of film, knowing you have thirty-six frames and no screen to check, that changes how you move through a landscape.",
-            "You slow down. You wait. You commit. Every frame costs something, so you only press the shutter when it truly matters — and that discipline bleeds into everything else I shoot.",
-            "I don't think film is better. I think it makes me better. And out in the backcountry, far from any charger, a fully mechanical camera and a few rolls of film feel less like nostalgia and more like freedom.",
+            "A lone bicyclist emerges from a thick blanket of fog, riding steadily down a quiet road. The mist hides what lies behind him and obscures what is ahead, creating an air of mystery and uncertainty. Despite the limited visibility, the cyclist continues forward with determination, trusting the path beneath his wheels.",
+            "The scene tells a story of perseverance and courage. The fog can symbolize life's challenges, moments when the future is unclear and the destination is unknown. Yet the rider does not stop or turn back. Instead, he presses on, guided by hope and confidence that the road will eventually reveal itself.",
+            "The photograph captures not just a cyclist on a road but a powerful reminder that even when our journey is clouded by uncertainty, moving forward is what leads us out of the fog.",
         ],
     },
 ];
