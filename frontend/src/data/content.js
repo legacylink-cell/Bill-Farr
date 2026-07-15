@@ -41,6 +41,18 @@ export const western = [
         location: "West Texas Ranch",
         cls: "md:col-span-5 md:row-span-2",
     },
+    {
+        src: "/west-sunburst.webp",
+        title: "First Light",
+        location: "Moab, Utah",
+        cls: "md:col-span-7 md:row-span-2",
+    },
+    {
+        src: "/west-mustangs.webp",
+        title: "Wild Mustangs",
+        location: "Open Range",
+        cls: "md:col-span-5 md:row-span-2",
+    },
 ];
 
 export const travel = [
@@ -60,9 +72,14 @@ export const travel = [
         location: "London, England",
     },
     {
-        src: "/travel-stpauls.webp",
-        title: "St Paul's After Dark",
-        location: "Millennium Bridge, London",
+        src: "/travel-prague.webp",
+        title: "Bridges of the Vltava",
+        location: "Prague, Czechia",
+    },
+    {
+        src: "/travel-thames.webp",
+        title: "The Shard After Dark",
+        location: "River Thames, London",
     },
 ];
 
