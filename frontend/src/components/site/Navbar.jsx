@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { track } from "../../lib/analytics";
 
 const links = [
     { label: "Work", id: "western" },
@@ -66,7 +67,10 @@ export const Navbar = () => {
                     ))}
                     <button
                         data-testid="nav-contact"
-                        onClick={() => go("contact")}
+                        onClick={() => {
+                            track("cta_click", { label: "Book a Shoot" });
+                            go("contact");
+                        }}
                         className={`border px-5 py-2 font-mono text-[0.7rem] uppercase tracking-[0.2em] transition-colors duration-300 ${
                             scrolled
                                 ? "border-walnut text-walnut hover:bg-walnut hover:text-sand"
@@ -101,7 +105,11 @@ export const Navbar = () => {
                                 <button
                                     key={l.id}
                                     data-testid={`nav-mobile-${l.id}`}
-                                    onClick={() => go(l.id)}
+                                    onClick={() => {
+                                        if (l.id === "contact")
+                                            track("cta_click", { label: "Book a Shoot" });
+                                        go(l.id);
+                                    }}
                                     className="border-b border-[var(--border-light)] py-4 text-left font-serif text-2xl text-walnut"
                                 >
                                     {l.label}

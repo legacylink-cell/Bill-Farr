@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 import { Navbar } from "@/components/site/Navbar";
 import { Loader } from "@/components/site/Loader";
 import { AnalyticsDashboard } from "@/components/site/AnalyticsDashboard";
-import { track } from "@/lib/analytics";
+import { track, trackPageview } from "@/lib/analytics";
 import { Hero } from "@/components/site/Hero";
 import { About } from "@/components/site/About";
 import { WesternGallery } from "@/components/site/WesternGallery";
@@ -20,8 +20,30 @@ function App() {
 
     useEffect(() => {
         const t = setTimeout(() => setLoading(false), 1500);
-        track("pageview");
+        trackPageview();
         return () => clearTimeout(t);
+    }, []);
+
+    // Section reach — fire once per section per visit.
+    useEffect(() => {
+        const ids = ["hero", "about", "western", "travel", "journal", "contact"];
+        const seen = new Set();
+        const obs = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((e) => {
+                    if (e.isIntersecting && !seen.has(e.target.id)) {
+                        seen.add(e.target.id);
+                        track("section_view", { label: e.target.id });
+                    }
+                });
+            },
+            { threshold: 0.4 }
+        );
+        ids.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) obs.observe(el);
+        });
+        return () => obs.disconnect();
     }, []);
 
     useEffect(() => {

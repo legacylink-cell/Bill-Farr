@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, X } from "lucide-react";
 import { journal } from "../../data/content";
+import { track } from "../../lib/analytics";
 
 export const Journal = () => {
     const [hover, setHover] = useState(null);
@@ -50,7 +51,10 @@ export const Journal = () => {
                         key={i}
                         type="button"
                         data-testid={`journal-item-${i}`}
-                        onClick={() => setOpen(i)}
+                        onClick={() => {
+                            track("journal_open", { label: entry.title });
+                            setOpen(i);
+                        }}
                         onMouseEnter={() => setHover(i)}
                         onMouseLeave={() => setHover(null)}
                         className="group flex flex-col gap-2 border-b border-[var(--border-light)] py-8 text-left transition-colors hover:border-clay md:flex-row md:items-center md:justify-between md:gap-8"

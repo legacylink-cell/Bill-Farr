@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { HERO_HORSES } from "../../data/content";
+import { track } from "../../lib/analytics";
 
 const go = (id) => {
     const el = document.getElementById(id);
@@ -62,7 +63,10 @@ export const Hero = () => {
                 >
                     <button
                         data-testid="hero-view-work"
-                        onClick={() => go("western")}
+                        onClick={() => {
+                            track("cta_click", { label: "View Work" });
+                            go("western");
+                        }}
                         className="border border-sand px-7 py-3 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-sand transition-colors duration-300 hover:bg-sand hover:text-walnut"
                     >
                         View the work

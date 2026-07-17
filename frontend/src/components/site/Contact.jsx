@@ -76,6 +76,7 @@ export const Contact = ({ prefill }) => {
                         <a
                             href="mailto:bill@billfarrphotography.com"
                             data-testid="contact-email"
+                            onClick={() => track("cta_click", { label: "Email Bill" })}
                             className="flex items-center gap-4 text-sand/80 transition-colors hover:text-clay"
                         >
                             <Mail strokeWidth={1.2} size={20} />
@@ -179,6 +180,7 @@ export const Contact = ({ prefill }) => {
                             form.subject || "Photography inquiry"
                         )}&body=${encodeURIComponent(form.message || "")}`}
                         data-testid="contact-email-direct"
+                        onClick={() => track("cta_click", { label: "Email Bill" })}
                         className="-mt-1 flex items-center justify-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.2em] text-sand/50 transition-colors hover:text-clay"
                     >
                         <Mail size={13} strokeWidth={1.4} />

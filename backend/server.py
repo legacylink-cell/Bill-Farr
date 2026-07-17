@@ -12,7 +12,7 @@ from pydantic import BeforeValidator
 from typing_extensions import Annotated
 import uuid
 import httpx
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 
 ROOT_DIR = Path(__file__).parent
@@ -148,6 +148,9 @@ class TrackEvent(BaseModel):
     type: str = "pageview"
     path: Optional[str] = None
     referrer: Optional[str] = None
+    label: Optional[str] = None
+    gallery: Optional[str] = None
+    load_ms: Optional[int] = None
 
 
 @api_router.post("/analytics/track")
@@ -158,14 +161,38 @@ async def track_event(ev: TrackEvent, request: Request):
     ref_host = urlparse(ev.referrer or "").netloc or "direct"
     if _is_internal_ref(ev.referrer or "", ref_host):
         return {"ok": True, "skipped": True}
-    await db.analytics.insert_one({
+    country = (request.headers.get("cf-ipcountry") or "").upper() or None
+    if country in ("XX", "T1"):  # Cloudflare unknown / Tor
+        country = None
+    doc = {
         "type": ev.type,
         "path": ev.path or "/",
         "ref_host": ref_host,
         "device": device,
+        "country": country,
         "ts": datetime.now(timezone.utc).isoformat(),
-    })
+    }
+    if ev.label:
+        doc["label"] = ev.label[:120]
+    if ev.gallery:
+        doc["gallery"] = ev.gallery
+    if ev.load_ms is not None and 0 < ev.load_ms < 120000:
+        doc["load_ms"] = int(ev.load_ms)
+    await db.analytics.insert_one(doc)
     return {"ok": True}
+
+
+def _top_by(items, keyfn, limit=None):
+    d = {}
+    for it in items:
+        k = keyfn(it)
+        if not k:
+            continue
+        d[k] = d.get(k, 0) + 1
+    res = sorted(d.items(), key=lambda x: (-x[1], x[0]))
+    if limit:
+        res = res[:limit]
+    return [{"label": k, "count": c} for k, c in res]
 
 
 @api_router.get("/analytics/summary")
@@ -190,22 +217,63 @@ async def analytics_summary(key: str):
                 pass
         return n
 
-    refs = {}
-    for d in views:
-        h = d.get("ref_host", "direct") or "direct"
-        refs[h] = refs.get(h, 0) + 1
-    top = sorted(refs.items(), key=lambda x: -x[1])[:6]
+    top = _top_by(views, lambda d: d.get("ref_host") or "direct", limit=6)
 
     mobile = sum(1 for d in views if d.get("device") == "mobile")
     total_views = len(views)
     conversion = round((len(inquiries) / total_views) * 100, 1) if total_views else 0.0
 
+    # Page-load speed (ms)
+    def avg(lst):
+        return round(sum(lst) / len(lst)) if lst else None
+    loads = [d["load_ms"] for d in views if isinstance(d.get("load_ms"), (int, float)) and d["load_ms"] > 0]
+    m_loads = [d["load_ms"] for d in views if d.get("device") == "mobile" and isinstance(d.get("load_ms"), (int, float)) and d["load_ms"] > 0]
+    d_loads = [d["load_ms"] for d in views if d.get("device") == "desktop" and isinstance(d.get("load_ms"), (int, float)) and d["load_ms"] > 0]
+    speed = {"avg": avg(loads), "mobile": avg(m_loads), "desktop": avg(d_loads)}
+
+    # Views over the last 30 days (daily)
+    days = {}
+    ordered_keys = []
+    for i in range(29, -1, -1):
+        k = (now - timedelta(days=i)).strftime("%m-%d")
+        days[k] = 0
+        ordered_keys.append(k)
+    for v in views:
+        try:
+            k = datetime.fromisoformat(v["ts"]).strftime("%m-%d")
+            if k in days:
+                days[k] += 1
+        except Exception:
+            pass
+    views_daily = [{"date": k, "count": days[k]} for k in ordered_keys]
+
+    # Section reach (funnel order)
+    order = ["hero", "about", "western", "travel", "journal", "contact"]
+    pretty = {"hero": "Hero", "about": "About", "western": "Western", "travel": "Travel", "journal": "Journal", "contact": "Contact"}
+    sec = {}
+    for d in docs:
+        if d.get("type") == "section_view" and d.get("label"):
+            sec[d["label"]] = sec.get(d["label"], 0) + 1
+    section_reach = [{"label": pretty.get(s, s), "count": sec.get(s, 0)} for s in order]
+
+    # Inquiry breakdown by type
+    inq_docs = await db.inquiries.find({}, {"_id": 0, "inquiry_type": 1}).to_list(100000)
+    inquiry_types = _top_by(inq_docs, lambda d: (d.get("inquiry_type") or "general").title())
+
     return {
         "totals": {"views": total_views, "inquiries": len(inquiries), "conversion": conversion},
         "last7": within(7, views),
         "last30": within(30, views),
-        "topReferrers": [{"host": h, "count": c} for h, c in top],
+        "topReferrers": top,
         "devices": {"mobile": mobile, "desktop": total_views - mobile},
+        "speed": speed,
+        "viewsDaily": views_daily,
+        "topJournals": _top_by([d for d in docs if d.get("type") == "journal_open"], lambda d: d.get("label"), limit=10),
+        "topImages": _top_by([d for d in docs if d.get("type") == "image_open"], lambda d: d.get("label"), limit=10),
+        "ctaClicks": _top_by([d for d in docs if d.get("type") == "cta_click"], lambda d: d.get("label"), limit=10),
+        "sectionReach": section_reach,
+        "inquiryTypes": inquiry_types,
+        "topCountries": _top_by(views, lambda d: d.get("country"), limit=8),
     }
 
 

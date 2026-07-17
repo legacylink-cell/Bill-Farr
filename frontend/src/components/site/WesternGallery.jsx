@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { western } from "../../data/content";
 import { Lightbox } from "./Lightbox";
+import { track } from "../../lib/analytics";
 
 export const WesternGallery = () => {
     const [idx, setIdx] = useState(null);
@@ -32,7 +33,10 @@ export const WesternGallery = () => {
                     <motion.button
                         key={i}
                         data-testid={`western-item-${i}`}
-                        onClick={() => setIdx(i)}
+                        onClick={() => {
+                            track("image_open", { label: img.title, gallery: "western" });
+                            setIdx(i);
+                        }}
                         className={`group relative block overflow-hidden ${img.cls}`}
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
