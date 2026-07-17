@@ -40,19 +40,33 @@ const RankList = ({ title, items, testid, empty = "No data yet." }) => {
 };
 
 const DailyChart = ({ data }) => {
+    const [hi, setHi] = useState(null);
     const max = Math.max(1, ...(data || []).map((d) => d.count));
     return (
         <div data-testid="analytics-daily">
             <h3 className="mb-4 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-clay">Views · last 30 days</h3>
-            <div className="flex h-28 items-end gap-[3px]">
-                {(data || []).map((d) => (
-                    <div
-                        key={d.date}
-                        title={`${d.date}: ${d.count}`}
-                        className="flex-1 bg-clay/70 transition-colors hover:bg-clay"
-                        style={{ height: `${d.count ? Math.max(4, (d.count / max) * 100) : 2}%` }}
-                    />
-                ))}
+            <div className="relative flex h-28 items-end gap-[3px]">
+                {(data || []).map((d, i) => {
+                    const h = d.count ? Math.max(4, (d.count / max) * 100) : 2;
+                    return (
+                        <div
+                            key={d.date}
+                            className="group relative flex h-full flex-1 items-end"
+                            onMouseEnter={() => setHi(i)}
+                            onMouseLeave={() => setHi(null)}
+                        >
+                            {hi === i && (
+                                <div className="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 -translate-x-1/2 whitespace-nowrap bg-walnut px-2 py-1 text-center font-mono text-[0.55rem] uppercase tracking-[0.12em] text-sand">
+                                    {d.date} · {d.count} view{d.count === 1 ? "" : "s"}
+                                </div>
+                            )}
+                            <div
+                                className="w-full bg-clay/70 transition-colors group-hover:bg-clay"
+                                style={{ height: `${h}%` }}
+                            />
+                        </div>
+                    );
+                })}
             </div>
             <div className="mt-2 flex justify-between font-mono text-[0.55rem] uppercase tracking-[0.15em] text-ink">
                 <span>{data?.[0]?.date}</span>
