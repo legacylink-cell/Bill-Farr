@@ -117,7 +117,7 @@ export const AnalyticsDashboard = () => {
     };
 
     return (
-        <div data-testid="analytics-dashboard" className="fixed inset-0 z-[90] overflow-y-auto bg-sand p-6 md:p-14">
+        <div data-testid="analytics-dashboard" data-lenis-prevent className="fixed inset-0 z-[90] overflow-y-auto overscroll-contain bg-sand p-6 md:p-14">
             <button
                 data-testid="analytics-close"
                 onClick={close}
