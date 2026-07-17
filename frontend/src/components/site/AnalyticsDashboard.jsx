@@ -78,6 +78,17 @@ export const AnalyticsDashboard = () => {
         };
     }, []);
 
+    // Lock background scroll while the dashboard overlay is open.
+    useEffect(() => {
+        if (!open) return;
+        window.__lenis?.stop();
+        document.body.style.overflow = "hidden";
+        return () => {
+            window.__lenis?.start();
+            document.body.style.overflow = "";
+        };
+    }, [open]);
+
     const load = async () => {
         try {
             const r = await axios.get(`${API}/analytics/summary`, { params: { key } });
