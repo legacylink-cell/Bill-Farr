@@ -32,7 +32,7 @@ Bill Farr, a Western & Travel photographer, wants a best-in-class portfolio site
   - Backend: `POST /api/analytics/track` (fields: type,label,gallery,load_ms), `GET /api/analytics/summary?key=` (401 on bad key). Collection `db.analytics`.
 
 ## Backlog
-- P1: Testimonials + Services/Pricing sections (awaiting Bill's copy); embed Instagram feed (awaiting handle).
+- P1: Testimonials + Services/Pricing sections (awaiting Bill's copy). Instagram: link added (@billfarrphoto59) in Contact + Footer — full embedded feed still optional/backlog.
 - P2: Restore hidden Prints section + Facebook/Instagram social links; Phase-1 CMS (password-protected editing of journal/copy); city-level geo (needs geo API/DB — currently country-only).
 
 ## Integrations

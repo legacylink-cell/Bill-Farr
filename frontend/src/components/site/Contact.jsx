@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { Mail, MapPin, Loader2 } from "lucide-react";
+import { Mail, MapPin, Loader2, Instagram } from "lucide-react";
 import { track } from "../../lib/analytics";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -81,6 +81,17 @@ export const Contact = ({ prefill }) => {
                         >
                             <Mail strokeWidth={1.2} size={20} />
                             <span className="font-mono text-sm tracking-wide">bill@billfarrphotography.com</span>
+                        </a>
+                        <a
+                            href="https://www.instagram.com/billfarrphoto59/"
+                            target="_blank"
+                            rel="noreferrer"
+                            data-testid="contact-instagram"
+                            onClick={() => track("cta_click", { label: "Instagram" })}
+                            className="flex items-center gap-4 text-sand/80 transition-colors hover:text-clay"
+                        >
+                            <Instagram strokeWidth={1.2} size={20} />
+                            <span className="font-mono text-sm tracking-wide">@billfarrphoto59</span>
                         </a>
                         <div className="flex items-center gap-4 text-sand/80">
                             <MapPin strokeWidth={1.2} size={20} />

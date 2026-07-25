@@ -1,3 +1,7 @@
+import { Instagram } from "lucide-react";
+import { track } from "../../lib/analytics";
+
+
 export const Footer = () => {
     return (
         <footer data-testid="footer" className="bg-walnut text-sand">
@@ -9,6 +13,17 @@ export const Footer = () => {
                             alt="Bill Farr Photography"
                             className="h-14 w-auto md:h-16"
                         />
+                        <a
+                            href="https://www.instagram.com/billfarrphoto59/"
+                            target="_blank"
+                            rel="noreferrer"
+                            data-testid="footer-instagram"
+                            onClick={() => track("cta_click", { label: "Instagram" })}
+                            className="mt-4 inline-flex items-center gap-2 font-mono text-[0.7rem] normal-case tracking-[0.15em] text-sand/60 transition-colors hover:text-clay"
+                        >
+                            <Instagram size={16} strokeWidth={1.4} />
+                            @billfarrphoto59
+                        </a>
                     </div>
                     <p className="max-w-xs font-serif text-lg italic text-sand/60">
                         "The best photographs are the ones you had to be present for."
