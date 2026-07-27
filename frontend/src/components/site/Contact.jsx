@@ -83,7 +83,7 @@ export const Contact = ({ prefill }) => {
                             <span className="font-mono text-sm tracking-wide">bill@billfarrphotography.com</span>
                         </a>
                         <a
-                            href="https://www.instagram.com/billfarrphoto59/"
+                            href="https://www.instagram.com/billfarr_photography59/"
                             target="_blank"
                             rel="noreferrer"
                             data-testid="contact-instagram"
@@ -91,7 +91,7 @@ export const Contact = ({ prefill }) => {
                             className="flex items-center gap-4 text-sand/80 transition-colors hover:text-clay"
                         >
                             <Instagram strokeWidth={1.2} size={20} />
-                            <span className="font-mono text-sm tracking-wide">@billfarrphoto59</span>
+                            <span className="font-mono text-sm tracking-wide">@billfarr_photography59</span>
                         </a>
                         <div className="flex items-center gap-4 text-sand/80">
                             <MapPin strokeWidth={1.2} size={20} />

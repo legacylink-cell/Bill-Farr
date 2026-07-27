@@ -14,7 +14,7 @@ export const Footer = () => {
                             className="h-14 w-auto md:h-16"
                         />
                         <a
-                            href="https://www.instagram.com/billfarrphoto59/"
+                            href="https://www.instagram.com/billfarr_photography59/"
                             target="_blank"
                             rel="noreferrer"
                             data-testid="footer-instagram"
@@ -22,7 +22,7 @@ export const Footer = () => {
                             className="mt-4 inline-flex items-center gap-2 font-mono text-[0.7rem] normal-case tracking-[0.15em] text-sand/60 transition-colors hover:text-clay"
                         >
                             <Instagram size={16} strokeWidth={1.4} />
-                            @billfarrphoto59
+                            @billfarr_photography59
                         </a>
                     </div>
                     <p className="max-w-xs font-serif text-lg italic text-sand/60">
