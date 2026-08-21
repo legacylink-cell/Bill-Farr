@@ -93,13 +93,6 @@ export const travel = [
     },
 ];
 
-// "View Galleries" showcase cards — each scrolls to a section on the site.
-export const galleries = [
-    { title: "The Western Series", copy: "Horses, riders & open range", src: "/west-sunburst.webp", target: "western" },
-    { title: "Travel & Landscape", copy: "Far horizons & city nights", src: "/travel-charles-bridge.webp", target: "travel" },
-    { title: "Behind the Lens", copy: "The story behind the work", src: "/portrait.webp", target: "about" },
-];
-
 export const prints = [
     {
         src: "/west-roping.webp",

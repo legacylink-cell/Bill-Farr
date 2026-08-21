@@ -9,7 +9,6 @@ import { AnalyticsDashboard } from "@/components/site/AnalyticsDashboard";
 import { track, trackPageview } from "@/lib/analytics";
 import { Hero } from "@/components/site/Hero";
 import { About } from "@/components/site/About";
-import { ViewGalleries } from "@/components/site/ViewGalleries";
 import { WesternGallery } from "@/components/site/WesternGallery";
 import { TravelGallery } from "@/components/site/TravelGallery";
 import { Journal } from "@/components/site/Journal";
@@ -83,7 +82,6 @@ function App() {
             <main>
                 <Hero />
                 <About />
-                <ViewGalleries />
                 <WesternGallery />
                 <TravelGallery />
                 <Journal />
