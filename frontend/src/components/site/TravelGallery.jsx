@@ -38,14 +38,31 @@ export const TravelGallery = () => {
                                 setIdx(i);
                             }}
                             className={`group block w-full cursor-pointer ${
-                                i % 2 === 0 ? "md:pr-[18%]" : "md:ml-auto md:pl-[18%]"
+                                img.lowres
+                                    ? "mx-auto"
+                                    : i % 2 === 0
+                                    ? "md:pr-[18%]"
+                                    : "md:ml-auto md:pl-[18%]"
                             }`}
+                            style={img.lowres ? { maxWidth: img.maxW } : undefined}
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-80px" }}
                             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            <ParallaxImage src={img.src} alt={img.title} />
+                            {img.lowres ? (
+                                <div className="overflow-hidden">
+                                    <img
+                                        src={img.src}
+                                        alt={img.title}
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
+                                    />
+                                </div>
+                            ) : (
+                                <ParallaxImage src={img.src} alt={img.title} />
+                            )}
                             <figcaption className="mt-4 flex items-baseline justify-between gap-6">
                                 <span className="font-serif text-3xl text-sand md:text-4xl">
                                     <span className="text-clay">{String(i + 1).padStart(2, "0")}</span>{" "}

@@ -85,16 +85,22 @@ export const travel = [
         src: "/travel-prague-square.webp",
         title: "Old Town Square",
         location: "Prague, Czechia",
+        lowres: true,
+        maxW: 848,
     },
     {
         src: "/travel-charles-bridge.webp",
         title: "Charles Bridge",
         location: "Vltava River, Prague",
+        lowres: true,
+        maxW: 377,
     },
     {
         src: "/travel-folk.webp",
         title: "Folk Dancers",
         location: "Prague, Czechia",
+        lowres: true,
+        maxW: 750,
     },
 ];
 
