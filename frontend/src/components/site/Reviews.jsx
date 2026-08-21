@@ -98,7 +98,7 @@ export const Reviews = () => {
                 <div>
                     <p className="overline mb-4">Kind words</p>
                     <h2 className="font-serif text-4xl font-light tracking-tight text-walnut md:text-6xl">
-                        From collectors
+                        What people say
                     </h2>
                 </div>
                 <button
