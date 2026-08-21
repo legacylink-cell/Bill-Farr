@@ -87,13 +87,6 @@ export const travel = [
         location: "Prague, Czechia",
     },
     {
-        src: "/travel-charles-bridge.webp",
-        title: "Charles Bridge",
-        location: "Vltava River, Prague",
-        lowres: true,
-        maxW: 603,
-    },
-    {
         src: "/travel-folk.webp",
         title: "Folk Dancers",
         location: "Prague, Czechia",
@@ -103,7 +96,7 @@ export const travel = [
 // "View Galleries" showcase cards — each scrolls to a section on the site.
 export const galleries = [
     { title: "The Western Series", copy: "Horses, riders & open range", src: "/west-sunburst.webp", target: "western" },
-    { title: "Travel & Landscape", copy: "Far horizons & city nights", src: "/travel-prague.webp", target: "travel" },
+    { title: "Travel & Landscape", copy: "Far horizons & city nights", src: "/travel-charles-bridge.webp", target: "travel" },
     { title: "Behind the Lens", copy: "The story behind the work", src: "/portrait.webp", target: "about" },
 ];
 
