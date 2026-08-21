@@ -81,6 +81,28 @@ export const travel = [
         title: "The Shard After Dark",
         location: "River Thames, London",
     },
+    {
+        src: "/travel-prague-square.webp",
+        title: "Old Town Square",
+        location: "Prague, Czechia",
+    },
+    {
+        src: "/travel-charles-bridge.webp",
+        title: "Charles Bridge",
+        location: "Vltava River, Prague",
+    },
+    {
+        src: "/travel-folk.webp",
+        title: "Folk Dancers",
+        location: "Prague, Czechia",
+    },
+];
+
+// "View Galleries" showcase cards — each scrolls to a section on the site.
+export const galleries = [
+    { title: "The Western Series", copy: "Horses, riders & open range", src: "/west-sunburst.webp", target: "western" },
+    { title: "Travel & Landscape", copy: "Far horizons & city nights", src: "/travel-prague.webp", target: "travel" },
+    { title: "Behind the Lens", copy: "The story behind the work", src: "/portrait.webp", target: "about" },
 ];
 
 export const prints = [

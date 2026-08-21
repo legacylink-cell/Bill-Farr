@@ -1,9 +1,10 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Request
+from fastapi import FastAPI, APIRouter, HTTPException, Request, File, UploadFile, Form, Response
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
+import requests
 from pathlib import Path
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from typing import List, Optional
@@ -277,6 +278,159 @@ async def analytics_summary(key: str):
     }
 
 
+# ---------------- Reviews / Testimonials ----------------
+APP_NAME = "billfarr"
+STORAGE_BASE = (os.environ.get("INTEGRATION_PROXY_URL") or "").strip() or "https://integrations.emergentagent.com"
+STORAGE_URL = STORAGE_BASE.rstrip("/") + "/objstore/api/v1/storage"
+EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY")
+_storage_key = None
+MIME = {"jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png", "webp": "image/webp", "gif": "image/gif"}
+
+
+def init_storage(force: bool = False):
+    global _storage_key
+    if _storage_key and not force:
+        return _storage_key
+    resp = requests.post(f"{STORAGE_URL}/init", json={"emergent_key": EMERGENT_KEY}, timeout=30)
+    resp.raise_for_status()
+    _storage_key = resp.json()["storage_key"]
+    return _storage_key
+
+
+def put_object(path: str, data: bytes, content_type: str) -> dict:
+    key = init_storage()
+    resp = requests.put(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key, "Content-Type": content_type}, data=data, timeout=120)
+    if resp.status_code == 404:
+        key = init_storage(force=True)
+        resp = requests.put(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key, "Content-Type": content_type}, data=data, timeout=120)
+    resp.raise_for_status()
+    return resp.json()
+
+
+def get_object(path: str):
+    key = init_storage()
+    resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key}, timeout=60)
+    if resp.status_code == 404:
+        key = init_storage(force=True)
+        resp = requests.get(f"{STORAGE_URL}/objects/{path}", headers={"X-Storage-Key": key}, timeout=60)
+    resp.raise_for_status()
+    return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
+
+
+class Review(BaseModel):
+    model_config = ConfigDict(populate_by_name=True, extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    location: str = ""
+    purchased: str = ""
+    rating: int = 5
+    text: str
+    photo_path: Optional[str] = None
+    status: str = "pending"  # pending | approved | rejected
+    reply: Optional[str] = None
+    created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
+
+
+class ReviewUpdate(BaseModel):
+    status: Optional[str] = None
+    reply: Optional[str] = None
+
+
+def _review_public(d):
+    return {
+        "id": d["id"],
+        "name": d["name"],
+        "location": d.get("location", ""),
+        "purchased": d.get("purchased", ""),
+        "rating": d.get("rating", 5),
+        "text": d["text"],
+        "reply": d.get("reply"),
+        "status": d.get("status", "pending"),
+        "photo": f"/api/reviews/{d['id']}/photo" if d.get("photo_path") else None,
+        "created_at": d.get("created_at"),
+    }
+
+
+@api_router.post("/reviews")
+async def create_review(
+    name: str = Form(...),
+    text: str = Form(...),
+    rating: int = Form(5),
+    location: str = Form(""),
+    purchased: str = Form(""),
+    photo: Optional[UploadFile] = File(None),
+):
+    review = Review(
+        name=name.strip()[:120],
+        text=text.strip()[:2000],
+        rating=max(1, min(5, int(rating))),
+        location=location.strip()[:120],
+        purchased=purchased.strip()[:200],
+    )
+    if photo is not None:
+        data = await photo.read()
+        if data:
+            ext = (photo.filename or "").rsplit(".", 1)[-1].lower()
+            ext = ext if ext in MIME else "jpg"
+            path = f"{APP_NAME}/reviews/{review.id}.{ext}"
+            try:
+                res = put_object(path, data, MIME.get(ext, "image/jpeg"))
+                review.photo_path = res["path"]
+            except Exception as e:
+                logger.error("Review photo upload failed: %s", e)
+    await db.reviews.insert_one(review.model_dump())
+    logger.info("New review from %s (pending)", review.name)
+    return {"ok": True}
+
+
+@api_router.get("/reviews")
+async def list_reviews():
+    docs = await db.reviews.find({"status": "approved"}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    return [_review_public(d) for d in docs]
+
+
+@api_router.get("/reviews/admin")
+async def admin_reviews(key: str):
+    if not ANALYTICS_KEY or key != ANALYTICS_KEY:
+        raise HTTPException(status_code=401, detail="Invalid access key")
+    docs = await db.reviews.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    return [_review_public(d) for d in docs]
+
+
+@api_router.get("/reviews/{rid}/photo")
+async def review_photo(rid: str):
+    d = await db.reviews.find_one({"id": rid})
+    if not d or not d.get("photo_path"):
+        raise HTTPException(status_code=404, detail="Not found")
+    try:
+        content, ct = get_object(d["photo_path"])
+    except Exception:
+        raise HTTPException(status_code=404, detail="Not found")
+    return Response(content=content, media_type=ct)
+
+
+@api_router.patch("/reviews/{rid}")
+async def update_review(rid: str, upd: ReviewUpdate, key: str):
+    if not ANALYTICS_KEY or key != ANALYTICS_KEY:
+        raise HTTPException(status_code=401, detail="Invalid access key")
+    fields = {}
+    if upd.status in ("pending", "approved", "rejected"):
+        fields["status"] = upd.status
+    if upd.reply is not None:
+        fields["reply"] = upd.reply.strip()[:2000] or None
+    if fields:
+        await db.reviews.update_one({"id": rid}, {"$set": fields})
+    return {"ok": True}
+
+
+@api_router.delete("/reviews/{rid}")
+async def delete_review(rid: str, key: str):
+    if not ANALYTICS_KEY or key != ANALYTICS_KEY:
+        raise HTTPException(status_code=401, detail="Invalid access key")
+    await db.reviews.delete_one({"id": rid})
+    return {"ok": True}
+
+
 app.include_router(api_router)
 
 app.add_middleware(
@@ -292,6 +446,15 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+
+@app.on_event("startup")
+async def startup_storage():
+    try:
+        init_storage()
+        logger.info("Object storage initialized")
+    except Exception as e:
+        logger.error("Storage init failed: %s", e)
 
 
 @app.on_event("shutdown")

@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { travel } from "../../data/content";
 import { ParallaxImage } from "./ParallaxImage";
+import { Lightbox } from "./Lightbox";
+import { track } from "../../lib/analytics";
 
 export const TravelGallery = () => {
+    const [idx, setIdx] = useState(null);
+    const nav = (d) => setIdx((i) => (i + d + travel.length) % travel.length);
     return (
         <section
             id="travel"
@@ -28,7 +33,11 @@ export const TravelGallery = () => {
                         <motion.figure
                             key={i}
                             data-testid={`travel-item-${i}`}
-                            className={`group block w-full ${
+                            onClick={() => {
+                                track("image_open", { label: img.title, gallery: "travel" });
+                                setIdx(i);
+                            }}
+                            className={`group block w-full cursor-pointer ${
                                 i % 2 === 0 ? "md:pr-[18%]" : "md:ml-auto md:pl-[18%]"
                             }`}
                             initial={{ opacity: 0, y: 50 }}
@@ -50,6 +59,8 @@ export const TravelGallery = () => {
                     ))}
                 </div>
             </div>
+
+            <Lightbox images={travel} index={idx} onClose={() => setIdx(null)} onNav={nav} />
         </section>
     );
 };

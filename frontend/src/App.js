@@ -9,9 +9,11 @@ import { AnalyticsDashboard } from "@/components/site/AnalyticsDashboard";
 import { track, trackPageview } from "@/lib/analytics";
 import { Hero } from "@/components/site/Hero";
 import { About } from "@/components/site/About";
+import { ViewGalleries } from "@/components/site/ViewGalleries";
 import { WesternGallery } from "@/components/site/WesternGallery";
 import { TravelGallery } from "@/components/site/TravelGallery";
 import { Journal } from "@/components/site/Journal";
+import { Reviews } from "@/components/site/Reviews";
 import { Contact } from "@/components/site/Contact";
 import { Footer } from "@/components/site/Footer";
 
@@ -81,9 +83,11 @@ function App() {
             <main>
                 <Hero />
                 <About />
+                <ViewGalleries />
                 <WesternGallery />
                 <TravelGallery />
                 <Journal />
+                <Reviews />
                 <Contact />
             </main>
             <Footer />

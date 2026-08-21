@@ -37,6 +37,16 @@ Bill Farr, a Western & Travel photographer, wants a best-in-class portfolio site
 
 ## Integrations
 - Emergent Managed Email (`EMERGENT_EMAIL_KEY`) — LIVE for contact form forwarding.
+- Emergent Object Storage (`EMERGENT_LLM_KEY`, `INTEGRATION_PROXY_URL`) — LIVE for reviewer photo uploads (app prefix `billfarr/reviews/`).
+
+## Reviews / Testimonials (added — verified iteration_15)
+- Public **Reviews section** ("From collectors") + **ViewGalleries** ("View the galleries", 3 cards: Western→#western, Travel→#travel, Behind the Lens→#about). Rendered in App.js between Journal and Contact / after About.
+- Visitor submits: name, optional photo (upload), star rating 1-5, what purchased, state/country, text. Status starts `pending` (hidden). Success toast: "your review matters to us".
+- **Admin moderation inside `/insights`** (key `bill-insights-2026`): list all reviews (filter pending/approved/rejected/all), Approve / Reject / Delete / Reply. Bill's reply shows on site under approved review.
+- Endpoints: `POST /api/reviews` (multipart), `GET /api/reviews` (approved only), `GET /api/reviews/admin?key=`, `GET /api/reviews/{id}/photo`, `PATCH /api/reviews/{id}?key=`, `DELETE /api/reviews/{id}?key=`. Collection `db.reviews`.
+- Travel gallery now click-to-enlarge (Lightbox) + `image_open` tracking → Travel photos now appear in Insights "Most-viewed photos". Western photos auto-tracked already.
+- Photos added: replaced "Before the Ride" (Westcliffe cowgirl); Travel +3 (Old Town Square, Charles Bridge, Folk Dancers).
+- Backend tests: `/app/backend/tests/test_reviews.py` (13 pass).
 
 ## Old status (historical, superseded above)
 

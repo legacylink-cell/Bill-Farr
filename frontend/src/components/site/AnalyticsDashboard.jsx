@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { X, Eye, Send, TrendingUp, Gauge, Smartphone, Monitor } from "lucide-react";
+import { X, Eye, Send, TrendingUp, Gauge, Smartphone, Monitor, Check, Trash2, Star } from "lucide-react";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
@@ -71,6 +71,132 @@ const DailyChart = ({ data }) => {
             <div className="mt-2 flex justify-between font-mono text-[0.55rem] uppercase tracking-[0.15em] text-ink">
                 <span>{data?.[0]?.date}</span>
                 <span>{data?.[data.length - 1]?.date}</span>
+            </div>
+        </div>
+    );
+};
+
+const badgeCls = {
+    pending: "bg-amber-100 text-amber-800",
+    approved: "bg-green-100 text-green-800",
+    rejected: "bg-red-100 text-red-700",
+};
+
+const ReviewsAdmin = ({ akey }) => {
+    const [items, setItems] = useState([]);
+    const [replies, setReplies] = useState({});
+    const [filter, setFilter] = useState("pending");
+
+    const load = () => {
+        axios
+            .get(`${API}/reviews/admin`, { params: { key: akey } })
+            .then((r) => {
+                setItems(r.data);
+                const rep = {};
+                r.data.forEach((x) => (rep[x.id] = x.reply || ""));
+                setReplies(rep);
+            })
+            .catch(() => {});
+    };
+    useEffect(load, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    const patch = async (id, body) => {
+        await axios.patch(`${API}/reviews/${id}`, body, { params: { key: akey } });
+        load();
+    };
+    const del = async (id) => {
+        await axios.delete(`${API}/reviews/${id}`, { params: { key: akey } });
+        load();
+    };
+
+    const counts = { pending: 0, approved: 0, rejected: 0 };
+    items.forEach((i) => (counts[i.status] = (counts[i.status] || 0) + 1));
+    const shown = items.filter((i) => (filter === "all" ? true : i.status === filter));
+
+    return (
+        <div data-testid="analytics-reviews">
+            <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <h3 className="font-mono text-[0.7rem] uppercase tracking-[0.2em] text-clay">Reviews</h3>
+                <div className="flex flex-wrap gap-2">
+                    {["pending", "approved", "rejected", "all"].map((f) => (
+                        <button
+                            key={f}
+                            data-testid={`reviews-filter-${f}`}
+                            onClick={() => setFilter(f)}
+                            className={`border px-3 py-1 font-mono text-[0.6rem] uppercase tracking-[0.15em] transition-colors ${
+                                filter === f ? "border-walnut bg-walnut text-sand" : "border-[var(--border-light)] text-ink hover:text-walnut"
+                            }`}
+                        >
+                            {f}{f !== "all" ? ` ${counts[f] || 0}` : ""}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {shown.length === 0 && <p className="text-sm text-ink">No {filter} reviews.</p>}
+
+            <div className="space-y-4">
+                {shown.map((r) => (
+                    <div key={r.id} data-testid={`admin-review-${r.id}`} className="border border-[var(--border-light)] p-4">
+                        <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-center gap-3">
+                                {r.photo ? (
+                                    <img src={`${process.env.REACT_APP_BACKEND_URL}${r.photo}`} alt={r.name} className="h-11 w-11 rounded-full object-cover" />
+                                ) : (
+                                    <div className="flex h-11 w-11 items-center justify-center rounded-full bg-walnut/10 font-serif text-walnut">{r.name.charAt(0)}</div>
+                                )}
+                                <div>
+                                    <p className="font-serif text-lg text-walnut">{r.name}</p>
+                                    <p className="font-mono text-[0.58rem] uppercase tracking-[0.15em] text-ink">{r.location || "—"}</p>
+                                </div>
+                            </div>
+                            <span className={`rounded px-2 py-0.5 font-mono text-[0.55rem] uppercase tracking-[0.15em] ${badgeCls[r.status] || ""}`}>{r.status}</span>
+                        </div>
+
+                        <div className="mt-3 flex items-center gap-1">
+                            {[1, 2, 3, 4, 5].map((n) => (
+                                <Star key={n} size={13} strokeWidth={1.4} className={n <= r.rating ? "fill-clay text-clay" : "text-walnut/25"} />
+                            ))}
+                        </div>
+                        <p className="mt-2 text-sm leading-relaxed text-ink">"{r.text}"</p>
+                        {r.purchased && <p className="mt-2 font-mono text-[0.58rem] uppercase tracking-[0.15em] text-clay">{r.purchased}</p>}
+
+                        <textarea
+                            data-testid={`admin-reply-${r.id}`}
+                            value={replies[r.id] ?? ""}
+                            onChange={(e) => setReplies((p) => ({ ...p, [r.id]: e.target.value }))}
+                            rows={2}
+                            placeholder="Reply from Bill (optional)…"
+                            className="mt-3 w-full resize-none border border-[var(--border-light)] bg-transparent p-2 text-sm text-walnut focus:border-clay focus:outline-none"
+                        />
+
+                        <div className="mt-3 flex flex-wrap gap-2">
+                            <button
+                                data-testid={`admin-approve-${r.id}`}
+                                onClick={() => patch(r.id, { status: "approved", reply: replies[r.id] || "" })}
+                                className="inline-flex items-center gap-1.5 border border-green-700 px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.15em] text-green-800 transition-colors hover:bg-green-700 hover:text-white"
+                            >
+                                <Check size={13} strokeWidth={1.6} /> Approve{r.status === "approved" ? " · save reply" : ""}
+                            </button>
+                            {r.status !== "rejected" && (
+                                <button
+                                    data-testid={`admin-reject-${r.id}`}
+                                    onClick={() => patch(r.id, { status: "rejected" })}
+                                    className="border border-[var(--border-light)] px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.15em] text-ink transition-colors hover:border-walnut hover:text-walnut"
+                                >
+                                    Reject
+                                </button>
+                            )}
+                            <button
+                                data-testid={`admin-delete-${r.id}`}
+                                onClick={() => del(r.id)}
+                                className="inline-flex items-center gap-1.5 border border-red-300 px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.15em] text-red-700 transition-colors hover:bg-red-700 hover:text-white"
+                            >
+                                <Trash2 size={13} strokeWidth={1.6} /> Delete
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     );
@@ -217,6 +343,9 @@ export const AnalyticsDashboard = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Reviews moderation */}
+                        <ReviewsAdmin akey={key} />
 
                         <p className="border-t border-[var(--border-light)] pt-6 font-mono text-[0.6rem] uppercase tracking-[0.2em] text-ink">
                             Cookieless · first-party · {data.totals.views} views tracked · country via edge network
