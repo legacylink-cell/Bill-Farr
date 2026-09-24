@@ -37,7 +37,7 @@ export const Footer = () => {
                     <a
                         href="https://mozeid.com/"
                         target="_blank"
-                        rel="noreferrer"
+                        rel="noopener"
                         data-testid="footer-credit"
                         className="link-underline font-mono text-[0.6rem] uppercase tracking-[0.25em] text-sand/50 transition-colors hover:text-clay"
                     >
