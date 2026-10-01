@@ -35,6 +35,15 @@ Bill Farr, a Western & Travel photographer, wants a best-in-class portfolio site
 - P1: Testimonials + Services/Pricing sections (awaiting Bill's copy). Instagram: link added (@billfarrphoto59) in Contact + Footer — full embedded feed still optional/backlog.
 - P2: Restore hidden Prints section + Facebook/Instagram social links; Phase-1 CMS (password-protected editing of journal/copy); city-level geo (needs geo API/DB — currently country-only).
 
+## SEO: pre-render + robots/sitemap (added)
+- `frontend/scripts/prerender.cjs` runs as `postbuild` (pure Node, no headless browser — safe for deploy pipeline). Injects real crawlable copy (1 `<h1>`, 500+ words: hero headline, About bio, section intros, journal, contact, footer credit) into `build/index.html` inside `#root`, and generates `build/sitemap.xml` from an explicit `routes` list (single source of truth).
+- `src/index.js` removes the `[data-prerender]` block before `createRoot().render()` → live app mounts cleanly, no hydration mismatch, no visual change.
+- `public/index.html`: `<noscript>` CSS guard forces any `opacity:0` animated content visible for no-JS crawlers. Canonical/OG/JSON-LD unchanged (single-route).
+- `public/robots.txt` + `public/sitemap.xml` static files (served before SPA fallback; verified 200 text/plain & application/xml).
+- Footer credit link rel changed `noreferrer` → `noopener` (href/text/style unchanged).
+- Verified: served HTML has 1 h1 + 501 words; live app removes prerender & keeps 1 h1, no console errors.
+- Conversion tracking: contact form submit already fires `track("inquiry")` (counts as conversion). Phone/tel link dropped per user request.
+
 ## Integrations
 - Emergent Managed Email (`EMERGENT_EMAIL_KEY`) — LIVE for contact form forwarding.
 - Emergent Object Storage (`EMERGENT_LLM_KEY`, `INTEGRATION_PROXY_URL`) — LIVE for reviewer photo uploads (app prefix `billfarr/reviews/`).

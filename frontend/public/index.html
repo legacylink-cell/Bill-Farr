@@ -10,6 +10,18 @@
         />
         <link rel="canonical" href="https://billfarrphotography.com/" />
 
+        <!-- No-JS / pre-render guard: never leave animated content invisible to crawlers -->
+        <noscript>
+            <style>
+                [style*="opacity:0"],
+                [style*="opacity: 0"] {
+                    opacity: 1 !important;
+                    transform: none !important;
+                }
+            </style>
+        </noscript>
+
+
         <!-- Favicons -->
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon-512.png" />

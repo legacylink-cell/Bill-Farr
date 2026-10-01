@@ -13,7 +13,12 @@ const queryClient = new QueryClient({
   },
 });
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const rootElement = document.getElementById("root");
+// Remove the build-time pre-render so the live app mounts cleanly (no mismatch).
+const pre = rootElement.querySelector("[data-prerender]");
+if (pre) pre.remove();
+
+const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
