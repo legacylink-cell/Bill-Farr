@@ -10,6 +10,11 @@
         />
         <link rel="canonical" href="https://billfarrphotography.com/" />
 
+        <!-- Hide the SEO pre-render block before first paint for JS browsers (no flash),
+             while leaving it in the HTML source for crawlers / no-JS clients. -->
+        <script>document.documentElement.classList.add("js");</script>
+        <style>html.js [data-prerender]{display:none !important;}</style>
+
         <!-- No-JS / pre-render guard: never leave animated content invisible to crawlers -->
         <noscript>
             <style>
