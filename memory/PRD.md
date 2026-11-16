@@ -48,6 +48,9 @@ Bill Farr, a Western & Travel photographer, wants a best-in-class portfolio site
 - Emergent Managed Email (`EMERGENT_EMAIL_KEY`) — LIVE for contact form forwarding.
 - Emergent Object Storage (`EMERGENT_LLM_KEY`, `INTEGRATION_PROXY_URL`) — LIVE for reviewer photo uploads (app prefix `billfarr/reviews/`).
 
+## Travel gallery redesign (added)
+- Travel & Landscape ("02 — On the Road") switched from the big alternating vertical stack to the SAME 12-col masonry grid as Western (`md:grid-cols-12 md:auto-rows-[180px]`, each item has `cls` col-span/row-span, lightbox + image_open tracking). Now 16 photos. Added 9 new: Flåm fjord cabins, Nyhavn day/dusk, Øresund turbines, Silo at Dusk (portrait), 4 Pennsylvania barns (travel-flam / travel-nyhavn-day / travel-nyhavn-dusk / travel-turbines / travel-pa-portrait / travel-pa-bluehour / travel-pa-bw / travel-pa-silo / travel-pa-lastlight .webp). ParallaxImage no longer used in Travel.
+
 ## Reviews / Testimonials (added — verified iteration_15)
 - Public **Reviews section** ("From collectors") + **ViewGalleries** ("View the galleries", 3 cards: Western→#western, Travel→#travel, Behind the Lens→#about). Rendered in App.js between Journal and Contact / after About.
 - Visitor submits: name, optional photo (upload), star rating 1-5, what purchased, state/country, text. Status starts `pending` (hidden). Success toast: "your review matters to us".

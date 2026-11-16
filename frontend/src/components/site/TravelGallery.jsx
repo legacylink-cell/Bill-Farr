@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { travel } from "../../data/content";
-import { ParallaxImage } from "./ParallaxImage";
 import { Lightbox } from "./Lightbox";
 import { track } from "../../lib/analytics";
 
 export const TravelGallery = () => {
     const [idx, setIdx] = useState(null);
     const nav = (d) => setIdx((i) => (i + d + travel.length) % travel.length);
+
     return (
         <section
             id="travel"
@@ -28,51 +28,35 @@ export const TravelGallery = () => {
                     </p>
                 </div>
 
-                <div className="space-y-16 md:space-y-28">
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:auto-rows-[180px] md:gap-6">
                     {travel.map((img, i) => (
-                        <motion.figure
+                        <motion.button
                             key={i}
                             data-testid={`travel-item-${i}`}
                             onClick={() => {
                                 track("image_open", { label: img.title, gallery: "travel" });
                                 setIdx(i);
                             }}
-                            className={`group block w-full cursor-pointer ${
-                                img.lowres
-                                    ? "mx-auto"
-                                    : i % 2 === 0
-                                    ? "md:pr-[18%]"
-                                    : "md:ml-auto md:pl-[18%]"
-                            }`}
-                            style={img.lowres ? { maxWidth: img.maxW } : undefined}
-                            initial={{ opacity: 0, y: 50 }}
+                            className={`group relative block overflow-hidden ${img.cls}`}
+                            initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-80px" }}
-                            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+                            viewport={{ once: true, margin: "-60px" }}
+                            transition={{ duration: 0.7, delay: (i % 3) * 0.08, ease: [0.16, 1, 0.3, 1] }}
                         >
-                            {img.lowres ? (
-                                <div className="overflow-hidden">
-                                    <img
-                                        src={img.src}
-                                        alt={img.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
-                                    />
-                                </div>
-                            ) : (
-                                <ParallaxImage src={img.src} alt={img.title} />
-                            )}
-                            <figcaption className="mt-4 flex items-baseline justify-between gap-6">
-                                <span className="font-serif text-3xl text-sand md:text-4xl">
-                                    <span className="text-clay">{String(i + 1).padStart(2, "0")}</span>{" "}
-                                    {img.title}
-                                </span>
-                                <span className="whitespace-nowrap font-mono text-[0.65rem] uppercase tracking-[0.2em] text-sand/50">
+                            <img
+                                src={img.src}
+                                alt={img.title}
+                                loading="lazy"
+                                decoding="async"
+                                className="aspect-[4/3] w-full object-cover brightness-[0.96] transition-all duration-700 ease-out group-hover:scale-[1.04] group-hover:brightness-105 md:aspect-auto md:h-full"
+                            />
+                            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between bg-gradient-to-t from-walnut/90 to-transparent p-5 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                                <span className="font-serif text-2xl text-sand">{img.title}</span>
+                                <span className="hidden font-mono text-[0.6rem] uppercase tracking-[0.2em] text-sand/70 sm:block">
                                     {img.location}
                                 </span>
-                            </figcaption>
-                        </motion.figure>
+                            </div>
+                        </motion.button>
                     ))}
                 </div>
             </div>

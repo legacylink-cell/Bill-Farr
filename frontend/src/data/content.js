@@ -56,41 +56,22 @@ export const western = [
 ];
 
 export const travel = [
-    {
-        src: "/travel-fog-bike.webp",
-        title: "Morning Fog",
-        location: "Greenwich Park, London",
-    },
-    {
-        src: "/travel-caddo.webp",
-        title: "Cypress Water",
-        location: "Caddo Lake, Texas",
-    },
-    {
-        src: "/travel-bigben.webp",
-        title: "Westminster After Dark",
-        location: "London, England",
-    },
-    {
-        src: "/travel-prague.webp",
-        title: "Bridges of the Vltava",
-        location: "Prague, Czechia",
-    },
-    {
-        src: "/travel-thames.webp",
-        title: "The Shard After Dark",
-        location: "River Thames, London",
-    },
-    {
-        src: "/travel-prague-square.webp",
-        title: "Old Town Square",
-        location: "Prague, Czechia",
-    },
-    {
-        src: "/travel-folk.webp",
-        title: "Folk Dancers",
-        location: "Prague, Czechia",
-    },
+    { src: "/travel-fog-bike.webp", title: "Morning Fog", location: "Greenwich Park, London", cls: "md:col-span-8 md:row-span-2" },
+    { src: "/travel-flam.webp", title: "Fjord Cabins", location: "Flåm, Norway", cls: "md:col-span-4 md:row-span-2" },
+    { src: "/travel-nyhavn-day.webp", title: "Nyhavn Harbour", location: "Copenhagen, Denmark", cls: "md:col-span-6 md:row-span-2" },
+    { src: "/travel-nyhavn-dusk.webp", title: "Nyhavn at Dusk", location: "Copenhagen, Denmark", cls: "md:col-span-6 md:row-span-2" },
+    { src: "/travel-caddo.webp", title: "Cypress Water", location: "Caddo Lake, Texas", cls: "md:col-span-5 md:row-span-2" },
+    { src: "/travel-turbines.webp", title: "Turbines in Fog", location: "Øresund, Denmark", cls: "md:col-span-7 md:row-span-2" },
+    { src: "/travel-bigben.webp", title: "Westminster After Dark", location: "London, England", cls: "md:col-span-7 md:row-span-2" },
+    { src: "/travel-pa-portrait.webp", title: "Silo at Dusk", location: "Pennsylvania", cls: "md:col-span-5 md:row-span-2" },
+    { src: "/travel-prague.webp", title: "Bridges of the Vltava", location: "Prague, Czechia", cls: "md:col-span-6 md:row-span-2" },
+    { src: "/travel-prague-square.webp", title: "Old Town Square", location: "Prague, Czechia", cls: "md:col-span-6 md:row-span-2" },
+    { src: "/travel-folk.webp", title: "Folk Dancers", location: "Prague, Czechia", cls: "md:col-span-4 md:row-span-2" },
+    { src: "/travel-pa-bluehour.webp", title: "Blue Hour Barn", location: "Pennsylvania", cls: "md:col-span-8 md:row-span-2" },
+    { src: "/travel-pa-bw.webp", title: "Valley Farm", location: "Pennsylvania", cls: "md:col-span-6 md:row-span-2" },
+    { src: "/travel-pa-silo.webp", title: "Barn & Silo", location: "Pennsylvania", cls: "md:col-span-6 md:row-span-2" },
+    { src: "/travel-pa-lastlight.webp", title: "Last Light", location: "Pennsylvania", cls: "md:col-span-8 md:row-span-2" },
+    { src: "/travel-thames.webp", title: "The Shard After Dark", location: "River Thames, London", cls: "md:col-span-4 md:row-span-2" },
 ];
 
 export const prints = [
