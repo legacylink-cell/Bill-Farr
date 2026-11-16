@@ -12,17 +12,17 @@ export const TravelGallery = () => {
         <section
             id="travel"
             data-testid="travel"
-            className="bg-walnut py-20 text-sand md:py-32"
+            className="mx-auto max-w-[1500px] px-6 py-20 md:px-12 md:py-28"
         >
-            <div className="mx-auto max-w-[1500px] px-6 md:px-12">
-                <div className="mb-14 flex flex-col justify-between gap-4 border-t border-[var(--border-dark)] pt-8 md:flex-row md:items-end">
+            <div>
+                <div className="mb-12 flex flex-col justify-between gap-4 border-t border-[var(--border-light)] pt-8 md:flex-row md:items-end">
                     <div>
                         <p className="overline mb-4">02 — On the Road</p>
-                        <h2 className="font-serif text-4xl font-light tracking-tight text-sand md:text-6xl">
+                        <h2 className="font-serif text-4xl font-light tracking-tight text-walnut md:text-6xl">
                             Travel & Landscape
                         </h2>
                     </div>
-                    <p className="max-w-sm text-sm leading-relaxed text-sand/60 md:text-right">
+                    <p className="max-w-sm text-sm leading-relaxed text-ink md:text-right">
                         Far horizons, mountain weather, and the golden hour wherever it
                         finds me.
                     </p>
